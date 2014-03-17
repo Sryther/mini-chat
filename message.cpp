@@ -1,19 +1,16 @@
 #include "message.h"
+#include <string>
 
-int timestamp;
-string from;
-string to;
-string username;
-string content;
+using namespace std;
 
 Message::Message() {
 
 }
 
-Message::toString() {
-    return username + '☺' + host + '☺' + content;
+Message::Message(string formattedString) {
+    // TODO split the string.
 }
 
-Message::~Message() {
-
+string Message::toString() {
+    return username + Message::getSeparator() + from + Message::getSeparator() + content;
 }
