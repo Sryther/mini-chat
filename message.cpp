@@ -5,13 +5,17 @@
 
 using namespace std;
 
+<<<<<<< HEAD
 /**
  * @brief Message::Message
  */
+=======
+>>>>>>> eadb6912df799fbe505ebc3e74e8197b7c5df513
 Message::Message() {
 
 }
 
+<<<<<<< HEAD
 /**
  * @brief Message::Message
  * @param formatedString
@@ -46,6 +50,17 @@ vector<string> Message::splitFormatedString(string formatedString) {
  * @brief Message::toString
  * @return string
  */
+=======
+Message::Message(string formattedString) {
+    // TODO split the string.
+
+}
+
+vector<string> Message::splitFormattedString(string formattedString) {
+
+}
+
+>>>>>>> eadb6912df799fbe505ebc3e74e8197b7c5df513
 string Message::toString() {
     return username + Message::getSeparator() + from + Message::getSeparator() + content;
 }
