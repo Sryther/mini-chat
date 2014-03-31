@@ -12,3 +12,14 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_actionFermer_triggered()
+{
+    this->close();
+}
+
+void MainWindow::on_actionOptions_triggered()
+{
+    options = new OptionsWindow();
+    options->show();
+}
