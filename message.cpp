@@ -1,7 +1,7 @@
 #include "message.h"
-#include <string>
-#include <vector>
-#include <string>
+#include <QString>
+#include <QVector>
+#include <QStringList>
 
 using namespace std;
 
@@ -16,36 +16,32 @@ Message::Message() {
  * @brief Message::Message
  * @param formatedString
  */
-Message::Message(string formatedString) {
-    vector<string> strings = splitFormatedString(formatedString);
-
-    username = strings[0];
-    from = strings[1];
-    content = strings[2];
+Message::Message(QString username, QString from, QString content) {
+    Message::username = username;
+    Message::from = from;
+    Message::content = content;
 }
 
 /**
- * @brief Message::splitFormatedString
+ * @brief Message::parse
  * @param formatedString
- * @return vector<string>
+ * @return QStringList
  */
-vector<string> Message::splitFormatedString(string formatedString) {
-    vector<string> strings;
-    string::size_type posTmp = formatedString.find(getSeparator()); //Recupere la position de la premiere occurence du separateur
-
-    while(posTmp != string::npos) {
-        strings.push_back(formatedString.substr(0, posTmp));    // Ajoute au vecteur la chaine avant le separateur
-        formatedString = formatedString.substr(posTmp + 1); // Retourne la suite de la chaine (suppression de la partie precedente et du separateur precedent
-        posTmp = formatedString.find(getSeparator());   // Recupere la position de l'occurence suivante du separateur, si pas d'occurence renvoie string::npos
-    }
-
+QStringList Message::parse(QString formatedString) {
+    QStringList strings;
+    strings = formatedString.split(Message::getSeparator());
     return strings;
 }
 
 /**
  * @brief Message::toString
- * @return string
+ * @return Qstring
  */
-string Message::toString() {
-    return username + Message::getSeparator() + from + Message::getSeparator() + content;
+QString Message::toString() {
+    QString str = username;
+    str.append(Message::getSeparator());
+    str.append(from);
+    str.append(Message::getSeparator());
+    str.append(content);
+    return str;
 }

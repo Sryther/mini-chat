@@ -20,3 +20,5 @@ HEADERS  += mainwindow.h \
     message.h
 
 FORMS    += mainwindow.ui
+
+OTHER_FILES +=

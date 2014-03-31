@@ -1,8 +1,9 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#include <vector>
-#include <string>
+#include <QVector>
+#include <QString>
+#include <QStringList>
 
 using namespace std;
 
@@ -10,17 +11,17 @@ class Message
 {
     public:
         int timestamp;
-        string from;
-        string to;
-        string username;
-        string content;
+        QString from;
+        QString to;
+        QString username;
+        QString content;
 
         Message();
-        Message(string formatedString);
-        string toString();
+        Message(QString username, QString from, QString content);
+        QString toString();
+        static QStringList parse(QString formattedString);
+        static const QString& getSeparator() { static QString separator("\x0001"); return separator; }
     private:
-        static const string& getSeparator() { static string separator("\x0001"); return separator; }
-        vector<string> splitFormatedString(string formattedString);
 };
 
 #endif // MESSAGE_H
