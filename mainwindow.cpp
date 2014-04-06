@@ -23,3 +23,9 @@ void MainWindow::on_actionOptions_triggered()
     options = new OptionsWindow();
     options->show();
 }
+
+void MainWindow::on_inputText_returnPressed()
+{
+    ui->incomingText->appendPlainText(ui->inputText->text());
+    ui->inputText->clear();
+}
