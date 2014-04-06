@@ -21,6 +21,8 @@ private slots:
 
     void on_actionOptions_triggered();
 
+    void on_inputText_returnPressed();
+
 private:
     Ui::MainWindow *ui;
 
