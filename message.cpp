@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QHostAddress>
 #include <exception>
+#include <stdexcept>
 
 using namespace std;
 

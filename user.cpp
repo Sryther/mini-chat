@@ -1,5 +1,6 @@
 #include "user.h"
 #include <exception>
+#include <stdexcept>
 #include <QString>
 
 User::User() {
