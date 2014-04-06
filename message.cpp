@@ -2,7 +2,8 @@
 #include <QString>
 #include <QStringList>
 #include <QDateTime>
-#include <QAbstractSocket>
+#include <QHostAddress>
+#include <exception>
 
 using namespace std;
 
@@ -65,13 +66,16 @@ QStringList Message::parse(QString formatedString) {
 }
 
 bool Message::isValid(QStringList params) {
-    if (QAbstractSocket::IPv4Protocol != params[1] || QAbstractSocket::IPv6Protocol != params[1]) { // Check if the IP is valid
+    try {
+        QHostAddress host = QHostAddress(params[1]); // Is a valid IP Address
+        if (params[0].isEmpty() || params[2].isEmpty() ) { // Check if a QString is empty
+            return false;
+        }
+        return true;
+    } catch(exception &e) {
+        e.what();
         return false;
     }
-    if (params[0].isEmpty() || params[2].isEmpty() ) { // Check if a QString is empty
-        return false;
-    }
-    return true;
 }
 
 /**
