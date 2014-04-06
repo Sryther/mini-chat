@@ -1,25 +1,56 @@
 #include "message.h"
 #include <QString>
-#include <QVector>
 #include <QStringList>
+#include <QDateTime>
+#include <QAbstractSocket>
 
 using namespace std;
 
 /**
  * @brief Message::Message
+ * @param username
+ * @param from Sender's IP
+ * @param content
+ * @param to Destination IP 0.0.0.0 <=> broadcast
  */
-Message::Message() {
-
-}
-
-/**
- * @brief Message::Message
- * @param formatedString
- */
-Message::Message(QString username, QString from, QString content) {
+Message::Message(QString username, QString from, QString content, QString to = "0.0.0.0") {
     Message::username = username;
     Message::from = from;
     Message::content = content;
+    Message::to = to;
+    Message::timestamp = QDateTime::currentDateTime().toTime_t(); // Returns the current timestamp
+}
+
+/**
+ * @brief Message::getSender
+ * @return QString
+ */
+QString Message::getSender() {
+    return Message::from;
+}
+
+/**
+ * @brief Message::getContent
+ * @return QString
+ */
+QString Message::getContent() {
+    return Message::content;
+}
+
+/**
+ * @brief Message::getUsername
+ * @return QString
+ */
+QString Message::getUsername() {
+    return Message::username;
+}
+
+/**
+ * @brief Message::getReceiver
+ * @return QString
+ */
+QString Message::getDestination() {
+    return Message::to;
 }
 
 /**
@@ -29,19 +60,29 @@ Message::Message(QString username, QString from, QString content) {
  */
 QStringList Message::parse(QString formatedString) {
     QStringList strings;
-    strings = formatedString.split(Message::getSeparator());
+    strings = formatedString.split(Message::getSeparator()); // Split into three elements
     return strings;
+}
+
+bool Message::isValid(QStringList params) {
+    if (QAbstractSocket::IPv4Protocol != params[1] || QAbstractSocket::IPv6Protocol != params[1]) { // Check if the IP is valid
+        return false;
+    }
+    if (params[0].isEmpty() || params[2].isEmpty() ) { // Check if a QString is empty
+        return false;
+    }
+    return true;
 }
 
 /**
  * @brief Message::toString
- * @return Qstring
+ * @return QString
  */
-QString Message::toString() {
-    QString str = username;
+QString Message::toQString() {
+    QString str = Message::username;
     str.append(Message::getSeparator());
-    str.append(from);
+    str.append(Message::from);
     str.append(Message::getSeparator());
-    str.append(content);
+    str.append(Message::content);
     return str;
 }
