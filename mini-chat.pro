@@ -19,13 +19,13 @@ SOURCES += main.cpp\
     message.cpp \
     optionswindow.cpp \
     userpersistent.cpp \
-    user.cpp
+    application.cpp
 
 HEADERS  += mainwindow.h \
     message.h \
     optionswindow.h \
     userpersistent.h \
-    user.h
+    application.h
 
 FORMS    += mainwindow.ui \
     optionswindow.ui

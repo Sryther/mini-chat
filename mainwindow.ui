@@ -44,7 +44,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="inputText"/>
+     <widget class="QLineEdit" name="inputText">
+      <property name="placeholderText">
+       <string>Tapez votre message...</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

@@ -2,6 +2,7 @@
 #define USER_H
 
 #include <QString>
+#include <QFile>
 
 class UserPersistent
 {
@@ -15,6 +16,7 @@ public:
 private:
     QString _username;
     int _port;
+    QFile* _savefile;
 public:
     QString getUsername() { return _username; };
     void setUsername(QString username) { _username = username; };
