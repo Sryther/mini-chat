@@ -2,28 +2,18 @@
 #define USER_H
 
 #include <QString>
+#include <QHostAddress>
 
 class User
 {
 private:
-    User();
-    ~User();
-    static User* _instance;
-public:
-    static User* getInstance();
-
-private:
     QString _username;
-    int _port;
+    QHostAddress _ip;
+
 public:
+    User(QString username, QHostAddress ip);
     QString getUsername() { return _username; };
-    void setUsername(QString username) { _username = username; };
-
-    int getPort() { return _port; };
-    void setPort(int port) { _port = port; };
-
-    void savePersistent();
-    void loadPersistent();
+    QHostAddress getIp() { return _ip; };
 };
 
 #endif // USER_H

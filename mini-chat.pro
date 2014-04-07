@@ -18,11 +18,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     message.cpp \
     optionswindow.cpp \
+    userpersistent.cpp \
     user.cpp
 
 HEADERS  += mainwindow.h \
     message.h \
     optionswindow.h \
+    userpersistent.h \
     user.h
 
 FORMS    += mainwindow.ui \
