@@ -1,9 +1,11 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#include <QString>
 #include <QStringList>
 #include <QAbstractSocket>
+#include <map>
+#include <QHostAddress>
+#include <QString>
 
 using namespace std;
 
@@ -22,10 +24,11 @@ class Message
         QString getUsername();
         QString getDestination();
     private:
-        QString from;
-        QString to;
-        QString username;
-        QString content;
+        map<QString, QHostAddress> _users;
+        QString _from;
+        QString _to;
+        QString _username;
+        QString _content;
 };
 
 #endif // MESSAGE_H
