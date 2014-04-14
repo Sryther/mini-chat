@@ -15,14 +15,18 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     message.cpp \
+    server.cpp \
+    connection.cpp \
     optionswindow.cpp \
     userpersistent.cpp \
     application.cpp
 
 HEADERS  += mainwindow.h \
     message.h \
+    connection.h \
+    server.h \
     optionswindow.h \
     userpersistent.h \
     application.h
