@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>340</width>
-    <height>144</height>
+    <width>262</width>
+    <height>136</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,23 +20,29 @@
    <enum>QFrame::Raised</enum>
   </property>
   <layout class="QFormLayout" name="formLayout_2">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetFixedSize</enum>
+   </property>
    <item row="0" column="0">
     <layout class="QFormLayout" name="formLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
+     </property>
      <property name="fieldGrowthPolicy">
       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
      </property>
      <property name="labelAlignment">
-      <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
      <property name="formAlignment">
-      <set>Qt::AlignJustify|Qt::AlignTop</set>
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
      </property>
      <item row="1" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>UserName</string>
+          <string>Utilisateur</string>
          </property>
         </widget>
        </item>
@@ -58,13 +64,6 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Charger</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </item>
@@ -96,19 +95,19 @@
        <item>
         <widget class="QLineEdit" name="lineEdit_2"/>
        </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>Charger</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
-     <item row="3" column="1">
-      <widget class="QPushButton" name="pushButton_3">
+     <item row="4" column="1">
+      <widget class="QPushButton" name="saveButton">
        <property name="text">
         <string>Enregistrer</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QPushButton" name="loadButton">
+       <property name="text">
+        <string>Charger</string>
        </property>
       </widget>
      </item>
