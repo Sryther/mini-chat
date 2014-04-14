@@ -17,14 +17,15 @@ Connection::Connection(QObject *parent)
 {
     _helloMessage = "undefined";
     _isHelloSent = false;
+    _users = new QMap<QString, QString>();
 }
 
-bool Connection::findOrNewUser(QString username, QHostAddress ip) {
-    auto it = Connection::_users.find(ip);
-    if (it != end(Connection::_users)) {
+bool Connection::findOrNewUser(QString username, QString ip) {
+    auto it = Connection::_users->find(ip);
+    if (it != end(*Connection::_users)) {
         return username == it.value();
     } else {
-        Connection::_users.insert(ip, username);
+        Connection::_users->insert(ip, username);
         return true;
     }
 }
@@ -52,3 +53,5 @@ void Connection::sendHelloMessage()
         _isHelloSent = true;
     }
 }
+
+QMap<QString, QString>* Connection::_users = nullptr;
