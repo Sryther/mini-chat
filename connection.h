@@ -17,7 +17,6 @@ class Connection : public QTcpSocket
         bool static findOrNewUser(QString username, QString ip);
     private:
         void setHelloMessage(const QString &message);
-        //void timerEvent(QTimerEvent *timerEvent);
         void sendHelloMessage();
         void sendPing();
 

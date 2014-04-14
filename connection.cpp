@@ -1,5 +1,6 @@
 #include "connection.h"
 #include <QtNetwork>
+#include <QIODevice>
 #include <map>
 
 using namespace std;
@@ -41,7 +42,7 @@ void Connection::sendPing()
         return;
     }
 
-    //write("PING 1 p");
+    write("PING 1 p");
 }
 
 

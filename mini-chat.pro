@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     connection.cpp \
     optionswindow.cpp \
     userpersistent.cpp \
-    application.cpp
+    application.cpp \
+    client.cpp
 
 HEADERS  += mainwindow.h \
     message.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     server.h \
     optionswindow.h \
     userpersistent.h \
-    application.h
+    application.h \
+    client.h
 
 FORMS    += mainwindow.ui \
     optionswindow.ui
