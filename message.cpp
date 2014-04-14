@@ -1,8 +1,5 @@
 #include "message.h"
-#include <QString>
-#include <QStringList>
 #include <QDateTime>
-#include <QHostAddress>
 #include <exception>
 #include <stdexcept>
 
@@ -15,11 +12,12 @@ using namespace std;
  * @param content
  * @param to Destination IP 0.0.0.0 <=> broadcast
  */
-Message::Message(QString username, QString from, QString content, QString to = "0.0.0.0") {
-    Message::username = username;
-    Message::from = from;
-    Message::content = content;
-    Message::to = to;
+Message::Message(QString username, QString from, QString content, QString to = "0.0.0.0") :
+    _username(username),
+    _from(from),
+    _content(content),
+    _to(to)
+{
     Message::timestamp = QDateTime::currentDateTime().toTime_t(); // Returns the current timestamp
 }
 
@@ -28,7 +26,7 @@ Message::Message(QString username, QString from, QString content, QString to = "
  * @return QString
  */
 QString Message::getSender() {
-    return Message::from;
+    return _from;
 }
 
 /**
@@ -36,7 +34,7 @@ QString Message::getSender() {
  * @return QString
  */
 QString Message::getContent() {
-    return Message::content;
+    return _content;
 }
 
 /**
@@ -44,7 +42,7 @@ QString Message::getContent() {
  * @return QString
  */
 QString Message::getUsername() {
-    return Message::username;
+    return _username;
 }
 
 /**
@@ -52,7 +50,7 @@ QString Message::getUsername() {
  * @return QString
  */
 QString Message::getDestination() {
-    return Message::to;
+    return _to;
 }
 
 /**
@@ -84,10 +82,11 @@ bool Message::isValid(QStringList params) {
  * @return QString
  */
 QString Message::toQString() {
-    QString str = Message::username;
-    str.append(Message::getSeparator());
-    str.append(Message::from);
-    str.append(Message::getSeparator());
-    str.append(Message::content);
+    QString str = _username;
+    str.append(getSeparator());
+    str.append(_from);
+    str.append(getSeparator());
+    str.append(_content);
+
     return str;
 }
