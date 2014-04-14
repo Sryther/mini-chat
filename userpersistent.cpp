@@ -6,15 +6,21 @@
 #include <QFile>
 #include <QTextStream>
 #include <ios>
+#include <QDir>
+#include <QApplication>
 
 UserPersistent::UserPersistent() {
-    _username = "";
+    _username = "Anonym";
     _port = 80;
-    _savefile = new QFile("settings.cfg");
+    _savefile = new QFile(qApp->applicationDirPath() + "/config.txt");
+    if (_savefile->exists()) {
+        loadPersistent();
+    }
 }
 
 UserPersistent::~UserPersistent() {
     _instance = nullptr;
+    _savefile = nullptr;
 }
 
 UserPersistent* UserPersistent::getInstance() {
@@ -25,16 +31,26 @@ UserPersistent* UserPersistent::getInstance() {
 }
 
 void UserPersistent::savePersistent() {
-    throw std::logic_error("not implemented");
+    if (!_savefile->open(QIODevice::WriteOnly | QIODevice::Text))
+        throw std::ios_base::failure("Unable to write to file");
+
+    QTextStream fileStream(_savefile);
+    fileStream << ">> Mini-chat settings <<\n";
+    fileStream << "username:" + _username + "\n";
+    fileStream << "port:";
+    fileStream << _port;
+    fileStream << "\n";
+
+    _savefile->close();
 }
 
 void UserPersistent::loadPersistent() {
     if (!_savefile->open(QIODevice::ReadOnly | QIODevice::Text))
         throw std::ios_base::failure("Unable to read file");
 
-    QTextStream inputStream(_savefile);
-    while ( !inputStream.atEnd() ) {
-        QString line = inputStream.readLine();
+    QTextStream fileStream(_savefile);
+    while ( !fileStream.atEnd() ) {
+        QString line = fileStream.readLine();
         if (line.contains("username:")) {
             _username = line.split("username:")[1];
         } else if (line.contains("port:")) {

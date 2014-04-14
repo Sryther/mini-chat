@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>262</width>
-    <height>136</height>
+    <height>162</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,7 +63,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="usernameField"/>
        </item>
       </layout>
      </item>
@@ -93,7 +93,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_2"/>
+        <widget class="QLineEdit" name="portField"/>
        </item>
       </layout>
      </item>

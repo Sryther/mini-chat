@@ -6,15 +6,11 @@
 #include <QString>
 #include <QStringList>
 #include <iostream>
+#include <QDir>
 
-int main(int argc, char *argv[]) try
-{
+int main(int argc, char *argv[]) {
         Application a(argc, argv);
         MainWindow w;
         w.show();
         return a.exec();
-} catch (std::exception &e) {
-    QMessageBox box;
-    box.setText(e.what());
-    box.show();
 }

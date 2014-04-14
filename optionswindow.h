@@ -15,8 +15,18 @@ public:
     explicit OptionsWindow(QWidget *parent = 0);
     ~OptionsWindow();
 
+private slots:
+    void on_loadButton_clicked();
+
+    void on_saveButton_clicked();
+
+    void on_usernameField_textChanged(const QString &arg1);
+
+    void on_portField_textChanged(const QString &arg1);
+
 private:
     Ui::OptionsWindow *ui;
+    void updateFields();
 };
 
 #endif // OPTIONSWINDOW_H
