@@ -8,6 +8,8 @@ OptionsWindow::OptionsWindow(QWidget *parent) :
     ui(new Ui::OptionsWindow)
 {
     ui->setupUi(this);
+    UserPersistent::getInstance()->loadPersistent();
+    updateFields();
 }
 
 OptionsWindow::~OptionsWindow()
