@@ -22,7 +22,7 @@ void MainWindow::on_actionFermer_triggered()
 
 void MainWindow::on_actionOptions_triggered()
 {
-    options = new OptionsWindow();
+    options = new OptionsWindow(0,ui->inputText);
     options->show();
 }
 

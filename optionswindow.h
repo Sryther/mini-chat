@@ -2,6 +2,7 @@
 #define OPTIONSWINDOW_H
 
 #include <QFrame>
+#include <QLineEdit>
 
 namespace Ui {
 class OptionsWindow;
@@ -12,7 +13,7 @@ class OptionsWindow : public QFrame
     Q_OBJECT
 
 public:
-    explicit OptionsWindow(QWidget *parent = 0);
+    explicit OptionsWindow(QWidget *parent = 0, QLineEdit &placeholder = nullptr);
     ~OptionsWindow();
 
 private slots:
@@ -27,6 +28,7 @@ private slots:
 private:
     Ui::OptionsWindow *ui;
     void updateFields();
+    QLineEdit usernamePlaceholder;
 };
 
 #endif // OPTIONSWINDOW_H
