@@ -27,6 +27,7 @@ void OptionsWindow::on_loadButton_clicked() {
 
 void OptionsWindow::on_saveButton_clicked() {
     UserPersistent::getInstance()->savePersistent();
+    this->close();
 }
 
 void OptionsWindow::on_usernameField_textChanged(const QString &arg1) {
