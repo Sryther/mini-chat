@@ -13,7 +13,7 @@ class OptionsWindow : public QFrame
     Q_OBJECT
 
 public:
-    explicit OptionsWindow(QWidget *parent = 0, QLineEdit &placeholder = nullptr);
+    explicit OptionsWindow(QWidget *parent = 0, QLineEdit *placeholder = nullptr);
     ~OptionsWindow();
 
 private slots:
@@ -28,7 +28,7 @@ private slots:
 private:
     Ui::OptionsWindow *ui;
     void updateFields();
-    QLineEdit usernamePlaceholder;
+    QLineEdit* usernamePlaceholder;
 };
 
 #endif // OPTIONSWINDOW_H
