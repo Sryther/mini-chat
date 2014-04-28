@@ -1,5 +1,5 @@
 #include "client.h"
-#include "connection.h"
+#include "resolver.h"
 #include "server.h"
 #include <QtNetwork>
 
@@ -28,10 +28,6 @@ void Client::sendMessage(Message message)
     foreach (peers)
         connection->sendMessage(message);
     */
-}
-
-void Client::disconnect() {
-
 }
 
 Client* Client::_instance = nullptr;

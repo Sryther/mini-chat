@@ -4,21 +4,18 @@
 #include <QString>
 #include <QMap>
 #include <QTcpSocket>
-#include <QTimer>
-#include <QTime>
 #include "message.h"
-#include "connection.h"
 
 using namespace std;
 
-class Connection : public QTcpSocket
+class Resolver
 {
-    Q_OBJECT
     public:
-        Connection(QObject *parent = 0);
+        Resolver(QObject *parent = 0);
         bool static findOrNewUser(QString username, QString ip);
-    private:
         static QMap<QString, QString>* _users;
+        static QString resolveUsername(QString username);
+        static QString resolveIp(QString ip);
 };
 
 #endif // CONNECTION_H

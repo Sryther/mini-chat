@@ -18,20 +18,20 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     message.cpp \
     server.cpp \
-    connection.cpp \
     optionswindow.cpp \
     userpersistent.cpp \
     application.cpp \
-    client.cpp
+    client.cpp \
+    resolver.cpp
 
 HEADERS  += mainwindow.h \
     message.h \
-    connection.h \
     server.h \
     optionswindow.h \
     userpersistent.h \
     application.h \
-    client.h
+    client.h \
+    resolver.h
 
 FORMS    += mainwindow.ui \
     optionswindow.ui
