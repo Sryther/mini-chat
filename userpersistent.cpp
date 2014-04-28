@@ -15,6 +15,8 @@ UserPersistent::UserPersistent() {
     _savefile = new QFile(qApp->applicationDirPath() + "/config.txt");
     if (_savefile->exists()) {
         loadPersistent();
+    } else {
+        savePersistent();
     }
 }
 

@@ -10,6 +10,8 @@ OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit &placeholder) :
     usernamePlaceholder (placeholder)
 {
     ui->setupUi(this);
+    UserPersistent::getInstance()->loadPersistent();
+    updateFields();
 }
 
 OptionsWindow::~OptionsWindow()
