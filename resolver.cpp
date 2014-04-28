@@ -1,5 +1,5 @@
 #include "resolver.h"
-#include <map>
+#include <QMapIterator>
 
 using namespace std;
 
@@ -18,10 +18,13 @@ bool Resolver::findOrNewUser(QString username, QString ip) {
         return true;
 }
 
-QString resolveUsername(QString username) {
-
+QString Resolver::resolveUsername(QString username) {
+    return Resolver::_users->find(username).key();
 }
 
-QString resolveIp(QString ip) {
-
+QString Resolver::resolveIp(QString ip) {
+    QMap<QString, QString>::iterator i;
+    for (i = Resolver::_users->begin(); i != Resolver::_users->end(); ++i)
+        if (i.value() == ip)
+            return i.value();
 }
