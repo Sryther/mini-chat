@@ -18,4 +18,6 @@ class Resolver
         static QString resolveIp(QString ip);
 };
 
+QMap<QString, QString>* Resolver::_users = nullptr;
+
 #endif // CONNECTION_H
