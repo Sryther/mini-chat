@@ -17,7 +17,8 @@ class Connection : public QTcpSocket
     public:
         Connection(QObject *parent = 0);
         bool static findOrNewUser(QString username, QString ip);
+    private:
+        static QMap<QString, QString>* _users;
 };
-
 
 #endif // CONNECTION_H

@@ -19,7 +19,6 @@ public:
 signals:
     void newConnection(Connection *connection);
 private:
-    void incomingConnection(qintptr socketDescriptor);
     QTcpServer _server;
 };
 

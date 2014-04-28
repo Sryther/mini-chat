@@ -18,3 +18,5 @@ bool Connection::findOrNewUser(QString username, QString ip) {
         return true;
     }
 }
+
+QMap<QString, QString>* Connection::_users = nullptr;

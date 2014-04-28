@@ -21,8 +21,17 @@ Client* Client::getInstance() {
 
 void Client::sendMessage(Message message)
 {
-    if (message.isValid())
+    if (!message.isValid())
         return;
+
+    /* TODO : recuperer les pairs
+    foreach (peers)
+        connection->sendMessage(message);
+    */
+}
+
+void Client::disconnect() {
+
 }
 
 Client* Client::_instance = nullptr;

@@ -14,6 +14,7 @@ private:
 public:
     static Client* getInstance();
     void sendMessage(Message message);
+    void disconnect();
 private:
     QString _ip;
 };

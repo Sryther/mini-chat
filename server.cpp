@@ -25,11 +25,4 @@ Server* Server::getInstance() {
     return Server::_instance;
 }
 
-void Server::incomingConnection(qintptr socketDescriptor)
-{
-    Connection *connection = new Connection(this);
-    connection->setSocketDescriptor(socketDescriptor);
-    emit newConnection(connection); // emit a new connection signal
-}
-
 Server* Server::_instance = nullptr;
