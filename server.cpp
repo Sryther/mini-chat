@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Server::Server(QObject *parent)
-    : QTcpServer(parent), _server(0)
+Server::Server()
+    : _server(0)
 {
     listen(QHostAddress::Any);
 }
@@ -14,6 +14,10 @@ Server::~Server() {
     Server::_instance = nullptr;
 }
 
+/**
+ * @brief Server::getInstance
+ * @return
+ */
 Server* Server::getInstance() {
     if (Server::_instance == nullptr) {
         Server::_instance = new Server();

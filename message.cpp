@@ -77,6 +77,19 @@ bool Message::isValid(QStringList params) {
     }
 }
 
+bool Message::isValid() {
+    try {
+        QHostAddress host = QHostAddress(_from); // Is a valid IP Address
+        if (_username.isEmpty() || _content.isEmpty() ) { // Check if a QString is empty
+            return false;
+        }
+        return true;
+    } catch(exception &e) {
+        e.what();
+        return false;
+    }
+}
+
 /**
  * @brief Message::toString
  * @return QString

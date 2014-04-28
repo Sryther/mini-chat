@@ -6,6 +6,8 @@
 #include <QTcpSocket>
 #include <QTimer>
 #include <QTime>
+#include "message.h"
+#include "connection.h"
 
 using namespace std;
 
@@ -15,16 +17,6 @@ class Connection : public QTcpSocket
     public:
         Connection(QObject *parent = 0);
         bool static findOrNewUser(QString username, QString ip);
-    private:
-        void setHelloMessage(const QString &message);
-        void sendHelloMessage();
-        void sendPing();
-
-        static QMap<QString, QString>* _users;
-        QString _helloMessage;
-        bool _isHelloSent;
-        QTimer _pingTimer;
-        QTime _pongTime;
 };
 
 

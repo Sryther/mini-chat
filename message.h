@@ -18,6 +18,7 @@ class Message
         QString toQString();
         static QStringList parse(QString formattedString);
         static bool isValid(QStringList params);
+        bool isValid();
         static const QString& getSeparator() { static QString separator("\x0001"); return separator; }
         QString getSender();
         QString getContent();

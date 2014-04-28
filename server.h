@@ -7,20 +7,20 @@ using namespace std;
 
 class Connection;
 
-class Server : public QTcpServer
+class Server : protected QTcpServer
 {
     Q_OBJECT
-
-    public:
-        static Server* getInstance();
-    signals:
-        void newConnection(Connection *connection);
-    private:
-        void incomingConnection(qintptr socketDescriptor);
-        Server(QObject *parent = 0);
-        QTcpServer _server;
-        static Server* _instance;
-        ~Server();
+private:
+    Server();
+    ~Server();
+    static Server* _instance;
+public:
+    static Server* getInstance();
+signals:
+    void newConnection(Connection *connection);
+private:
+    void incomingConnection(qintptr socketDescriptor);
+    QTcpServer _server;
 };
 
 #endif // SERVER_H
