@@ -1,13 +1,17 @@
 #include "optionswindow.h"
 #include "ui_optionswindow.h"
 #include "userpersistent.h"
+#include "mainwindow.h"
 
 
-OptionsWindow::OptionsWindow(QWidget *parent) :
+OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
     QFrame(parent),
-    ui(new Ui::OptionsWindow)
+    ui(new Ui::OptionsWindow),
+    usernamePlaceholder (placeholder)
 {
     ui->setupUi(this);
+    UserPersistent::getInstance()->loadPersistent();
+    updateFields();
 }
 
 OptionsWindow::~OptionsWindow()
@@ -28,6 +32,7 @@ void OptionsWindow::on_loadButton_clicked() {
 void OptionsWindow::on_saveButton_clicked() {
     UserPersistent::getInstance()->savePersistent();
     this->close();
+    usernamePlaceholder->setPlaceholderText(UserPersistent::getInstance()->getUsername() + "> ");
 }
 
 void OptionsWindow::on_usernameField_textChanged(const QString &arg1) {
