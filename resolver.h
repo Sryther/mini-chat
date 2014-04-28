@@ -15,6 +15,7 @@ class Resolver
         static QMap<QString, QString>* _users;
         static QString resolveUsername(QString username);
         static QString resolveIp(QString ip);
+        static void addUser(QString username, QString ip);
 };
 
 QMap<QString, QString>* Resolver::_users = nullptr;

@@ -14,7 +14,7 @@ bool Resolver::findOrNewUser(QString username, QString ip) {
     if (it != end(*Resolver::_users))
         return ip == it.value();
     else
-        Resolver::_users->insert(username, ip);
+        Resolver::addUser(username, ip);
         return true;
 }
 
@@ -27,4 +27,8 @@ QString Resolver::resolveIp(QString ip) {
     for (i = Resolver::_users->begin(); i != Resolver::_users->end(); ++i)
         if (i.value() == ip)
             return i.value();
+}
+
+void Resolver::addUser(QString username, QString ip) {
+    Resolver::_users->insert(username, ip);
 }
