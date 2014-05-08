@@ -18,6 +18,4 @@ class Resolver
         static void addUser(QString username, QString ip);
 };
 
-QMap<QString, QString>* Resolver::_users = nullptr;
-
 #endif // CONNECTION_H

@@ -1,5 +1,5 @@
 #include "server.h"
-#include "connection.h"
+#include "resolver.h"
 #include <QtNetwork>
 
 using namespace std;
