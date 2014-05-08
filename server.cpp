@@ -27,6 +27,10 @@ Server* Server::getInstance() {
     return Server::_instance;
 }
 
+/**
+ * @brief Server::prepareMessage
+ * @param messageText
+ */
 void Server::prepareMessage(QString messageText)
 {
     if (messageText.isEmpty())
@@ -43,6 +47,11 @@ void Server::prepareMessage(QString messageText)
     }
 }
 
+/**
+ * @brief Server::sendMessage
+ * @param message
+ * @return
+ */
 bool Server::sendMessage(Message message) {
     QString to = message.getDestination();
     return true;

@@ -18,7 +18,7 @@ Message::Message(QString username, QString from, QString content, QString to = "
     _content(content),
     _to(to)
 {
-    Message::timestamp = QDateTime::currentDateTime().toTime_t(); // Returns the current timestamp
+    timestamp = QDateTime::currentDateTime().toTime_t(); // Returns the current timestamp
 }
 
 /**
