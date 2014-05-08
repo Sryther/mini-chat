@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "optionswindow.h"
 #include "message.h"
+#include <QSystemTrayIcon>
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +29,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    QSystemTrayIcon *trayIcon;
 
     OptionsWindow *options;
 };
