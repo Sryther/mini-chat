@@ -31,8 +31,8 @@ void OptionsWindow::on_loadButton_clicked() {
 
 void OptionsWindow::on_saveButton_clicked() {
     UserPersistent::getInstance()->savePersistent();
+    usernamePlaceholder->setPlaceholderText(UserPersistent::getInstance()->getUsername() + ">");
     this->close();
-    usernamePlaceholder->setPlaceholderText(UserPersistent::getInstance()->getUsername() + "> ");
 }
 
 void OptionsWindow::on_usernameField_textChanged(const QString &arg1) {
