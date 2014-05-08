@@ -5,8 +5,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    trayIcon(new QSystemTrayIcon(this))
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     ui->inputText->setPlaceholderText(UserPersistent::getInstance()->getUsername() + "> ");
