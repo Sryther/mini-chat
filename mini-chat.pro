@@ -21,7 +21,6 @@ SOURCES += main.cpp\
     optionswindow.cpp \
     userpersistent.cpp \
     application.cpp \
-    client.cpp \
     resolver.cpp
 
 HEADERS  += mainwindow.h \
@@ -30,7 +29,6 @@ HEADERS  += mainwindow.h \
     optionswindow.h \
     userpersistent.h \
     application.h \
-    client.h \
     resolver.h
 
 FORMS    += mainwindow.ui \

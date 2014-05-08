@@ -2,6 +2,8 @@
 #define SERVER_H
 #include <QTcpServer>
 #include <QObject>
+#include <QString>
+#include "message.h"
 
 using namespace std;
 
@@ -16,9 +18,11 @@ private:
     static Server* _instance;
 public:
     static Server* getInstance();
+    void prepareMessage(QString messageText);
 signals:
     void newConnection(Connection *connection);
 private:
+    bool sendMessage(Message message);
     QTcpServer _server;
 };
 

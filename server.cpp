@@ -1,5 +1,7 @@
 #include "server.h"
 #include "resolver.h"
+#include "message.h"
+#include "userpersistent.h"
 #include <QtNetwork>
 
 using namespace std;
@@ -23,6 +25,27 @@ Server* Server::getInstance() {
         Server::_instance = new Server();
     }
     return Server::_instance;
+}
+
+void Server::prepareMessage(QString messageText)
+{
+    if (messageText.isEmpty())
+        return;
+
+    QString username = UserPersistent::getInstance()->getUsername();
+    QString from = "127.0.0.1"; // TODO: Change for a real wan ip
+    QMap<QString, QString>::iterator i;
+    for (i = Resolver::_users->begin(); i != Resolver::_users->end(); ++i) {
+        Message message = Message(username, from, messageText, i.value());
+        if (!this->sendMessage(message)) {
+            break; // TODO: Exception
+        }
+    }
+}
+
+bool Server::sendMessage(Message message) {
+    QString to = message.getDestination();
+    return true;
 }
 
 Server* Server::_instance = nullptr;

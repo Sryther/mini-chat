@@ -32,3 +32,5 @@ QString Resolver::resolveIp(QString ip) {
 void Resolver::addUser(QString username, QString ip) {
     Resolver::_users->insert(username, ip);
 }
+
+QMap<QString, QString>* Resolver::_users = nullptr;
