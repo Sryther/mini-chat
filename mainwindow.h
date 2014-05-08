@@ -29,8 +29,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-
     OptionsWindow *options;
+
+    QSystemTrayIcon *trayIcon;
 };
 
 #endif // MAINWINDOW_H

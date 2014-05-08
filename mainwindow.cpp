@@ -9,19 +9,22 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->inputText->setPlaceholderText(UserPersistent::getInstance()->getUsername() + "> ");
+    QIcon icon(":/icons/sms-call.png");
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setToolTip("Mini-Chat");
+    trayIcon->setIcon(icon);
+    trayIcon->show();
 }
 
 MainWindow::~MainWindow()
 {
-    if (options) {
-        delete options;
-    }
+    if (options) delete options;
+    delete trayIcon;
     delete ui;
 }
 
 void MainWindow::on_actionFermer_triggered()
 {
-    if (options) options->close();
     this->close();
 }
 
@@ -33,6 +36,7 @@ void MainWindow::on_actionOptions_triggered()
 
 void MainWindow::on_inputText_returnPressed()
 {
+    if (ui->inputText->text() == "") return;
     Message msg = Message(UserPersistent::getInstance()->getUsername(), "127.0.0.1", ui->inputText->text(), "0.0.0.0");
     this->appendMessage(msg);
     ui->inputText->clear();
@@ -40,15 +44,10 @@ void MainWindow::on_inputText_returnPressed()
 
 void MainWindow::appendMessage(Message msg){
     QDateTime time = QDateTime::fromTime_t(msg.timestamp);
-    ui->incomingText->append("<span style='font-weight:bold;' title='from " + msg.getSender() + " à " + time.toString() + "'>" + msg.getUsername() + "></span> " + msg.getContent());
+    ui->incomingText->append("<span style='font-weight:bold;' title='from " + msg.getSender() + " at " + time.toString("hh'h'mm:ss") + "'>" + msg.getUsername() + "></span> " + msg.getContent());
 
     // Show System Tray Icon if minimized
-    if (!this->isMinimized()) {
-        QSystemTrayIcon* trayIcon = new QSystemTrayIcon(this);
-        QIcon icon(":/icons/sms-call.png");
-        trayIcon->setToolTip("Mini-Chat");
-        trayIcon->show();
-        trayIcon->setIcon(icon);
-        trayIcon->showMessage("Nouveau message !", msg.getUsername() + " > " + msg.getContent(), QSystemTrayIcon::Information, 151000);
+    if (this->isMinimized()) {
+        trayIcon->showMessage(msg.getUsername(), msg.getContent(), QSystemTrayIcon::Information, 151000);
     }
 }
