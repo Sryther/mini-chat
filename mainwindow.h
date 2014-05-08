@@ -30,8 +30,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    QSystemTrayIcon *trayIcon;
-
     OptionsWindow *options;
 };
 

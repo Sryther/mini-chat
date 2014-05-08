@@ -10,11 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->inputText->setPlaceholderText(UserPersistent::getInstance()->getUsername() + "> ");
-    QSystemTrayIcon* trayIcon = new QSystemTrayIcon(this);
-    QIcon icon(":/icons/sms-call.png");
-    trayIcon->setToolTip("Mini-Chat");
-    trayIcon->show();
-    trayIcon->setIcon(icon);
 }
 
 MainWindow::~MainWindow()
@@ -49,7 +44,12 @@ void MainWindow::appendMessage(Message msg){
     ui->incomingText->append("<span style='font-weight:bold;' title='from " + msg.getSender() + " à " + time.toString() + "'>" + msg.getUsername() + "></span> " + msg.getContent());
 
     // Show System Tray Icon if minimized
-    if (this->isMinimized()) {
+    if (!this->isMinimized()) {
+        QSystemTrayIcon* trayIcon = new QSystemTrayIcon(this);
+        QIcon icon(":/icons/sms-call.png");
+        trayIcon->setToolTip("Mini-Chat");
+        trayIcon->show();
+        trayIcon->setIcon(icon);
         trayIcon->showMessage("Nouveau message !", msg.getUsername() + " > " + msg.getContent(), QSystemTrayIcon::Information, 151000);
     }
 }
