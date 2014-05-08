@@ -8,14 +8,17 @@
 #include <ios>
 #include <QDir>
 #include <QApplication>
+#include <QColor>
 
 UserPersistent::UserPersistent() {
-    _username = "Anonym";
+    _username = "nouveau";
     _port = 80;
     _savefile = new QFile(qApp->applicationDirPath() + "/config.txt");
     if (_savefile->exists()) {
         loadPersistent();
     } else {
+        QColor color = QColor::fromRgb(qrand() % 256, qrand() % 256, qrand() % 256);
+        _color = QString::number(color.red()) + "," + QString::number(color.green()) + "," + QString::number(color.blue());
         savePersistent();
     }
 }
@@ -39,9 +42,8 @@ void UserPersistent::savePersistent() {
     QTextStream fileStream(_savefile);
     fileStream << ">> Mini-chat settings <<\n";
     fileStream << "username:" + _username + "\n";
-    fileStream << "port:";
-    fileStream << _port;
-    fileStream << "\n";
+    fileStream << "port:" + QString::number(_port) + "\n";
+    fileStream << "color:" + _color + "\n";
 
     _savefile->close();
 }
@@ -57,6 +59,8 @@ void UserPersistent::loadPersistent() {
             _username = line.split("username:")[1];
         } else if (line.contains("port:")) {
             _port = line.split("port:")[1].toInt();
+        } else if (line.contains("color:")) {
+            _color = line.split("color:")[1];
         }
     }
     _savefile->close();
