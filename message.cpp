@@ -12,45 +12,14 @@ using namespace std;
  * @param content
  * @param to Destination IP 0.0.0.0 <=> broadcast
  */
-Message::Message(QString username, QString from, QString content, QString to = "0.0.0.0") :
+Message::Message(QString username, QString color, QString from, QString content, QString to = "0.0.0.0") :
     _username(username),
+    _color(color),
     _from(from),
     _content(content),
     _to(to)
 {
     timestamp = QDateTime::currentDateTime().toTime_t(); // Returns the current timestamp
-}
-
-/**
- * @brief Message::getSender
- * @return QString
- */
-QString Message::getSender() {
-    return _from;
-}
-
-/**
- * @brief Message::getContent
- * @return QString
- */
-QString Message::getContent() {
-    return _content;
-}
-
-/**
- * @brief Message::getUsername
- * @return QString
- */
-QString Message::getUsername() {
-    return _username;
-}
-
-/**
- * @brief Message::getReceiver
- * @return QString
- */
-QString Message::getDestination() {
-    return _to;
 }
 
 /**

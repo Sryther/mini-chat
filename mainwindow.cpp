@@ -37,14 +37,18 @@ void MainWindow::on_actionOptions_triggered()
 void MainWindow::on_inputText_returnPressed()
 {
     if (ui->inputText->text() == "") return;
-    Message msg = Message(UserPersistent::getInstance()->getUsername(), "127.0.0.1", ui->inputText->text(), "0.0.0.0");
+    Message msg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
+                          "127.0.0.1", ui->inputText->text(), "0.0.0.0");
     this->appendMessage(msg);
     ui->inputText->clear();
 }
 
 void MainWindow::appendMessage(Message msg){
     QDateTime time = QDateTime::fromTime_t(msg.timestamp);
-    ui->incomingText->append("<span style='font-weight:bold;' title='from " + msg.getSender() + " at " + time.toString("hh'h'mm:ss") + "'>" + msg.getUsername() + "></span> " + msg.getContent());
+    ui->incomingText->append("<span style='font-weight:bold; color:" + msg.getColor() +
+                             "' title='from " +
+                             msg.getSender() + " at " + time.toString("hh'h'mm:ss") + "'>" +
+                             msg.getUsername() + "></span> " + msg.getContent());
 
     // Show System Tray Icon if minimized
     if (this->isMinimized()) {

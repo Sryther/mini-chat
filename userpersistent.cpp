@@ -8,7 +8,7 @@
 #include <ios>
 #include <QDir>
 #include <QApplication>
-#include <QColor>
+#include <QDateTime>
 
 UserPersistent::UserPersistent() {
     _username = "nouveau";
@@ -17,8 +17,12 @@ UserPersistent::UserPersistent() {
     if (_savefile->exists()) {
         loadPersistent();
     } else {
-        QColor color = QColor::fromRgb(qrand() % 256, qrand() % 256, qrand() % 256);
-        _color = QString::number(color.red()) + "," + QString::number(color.green()) + "," + QString::number(color.blue());
+        qsrand(QDateTime::currentDateTime().toTime_t());
+        QString colors = "0123456789ABCDEF";
+        _color = "#";
+        for (int i = 0; i < 6; i++) {
+            _color += QString(colors.at(qrand() % 16));
+        }
         savePersistent();
     }
 }
