@@ -44,7 +44,7 @@ void MainWindow::on_inputText_returnPressed()
 }
 
 void MainWindow::appendMessage(Message msg){
-    QDateTime time = QDateTime::fromTime_t(msg.timestamp);
+    QDateTime time = QDateTime::fromTime_t(msg.getTimestamp());
     ui->incomingText->append("<span style='font-weight:bold; color:" + msg.getColor() +
                              "' title='from " +
                              msg.getSender() + " at " + time.toString("hh'h'mm:ss") + "'>" +

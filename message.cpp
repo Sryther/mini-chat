@@ -17,9 +17,20 @@ Message::Message(QString username, QString color, QString from, QString content,
     _color(color),
     _from(from),
     _content(content),
-    _to(to)
+    _to(to),
+    _timestamp(QDateTime::currentDateTime().toTime_t())
 {
-    timestamp = QDateTime::currentDateTime().toTime_t(); // Returns the current timestamp
+
+}
+
+Message::Message(QString formattedString) {
+    QStringList list = this->parse(formattedString);
+    _username = list[0];
+    _color = list[1];
+    _from = list[2];
+    _content = list[3];
+    _to = list[4];
+    _timestamp = QDateTime::currentDateTime().toTime_t();
 }
 
 /**
@@ -65,6 +76,8 @@ bool Message::isValid() {
  */
 QString Message::toQString() {
     QString str = _username;
+    str.append(getSeparator());
+    str.append(_color);
     str.append(getSeparator());
     str.append(_from);
     str.append(getSeparator());

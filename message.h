@@ -12,9 +12,10 @@ using namespace std;
 class Message
 {
     public:
-        uint timestamp;
+        uint _timestamp;
 
         Message(QString username, QString color, QString from, QString content, QString to);
+        Message(QString formattedString);
         QString toQString();
         static QStringList parse(QString formattedString);
         static bool isValid(QStringList params);
@@ -25,6 +26,7 @@ class Message
         QString getUsername() { return _username; };
         QString getColor() { return _color; };
         QString getDestination() { return _to; };
+        uint getTimestamp() { return _timestamp; };
     private:
         map<QString, QHostAddress> _users;
         QString _from;
