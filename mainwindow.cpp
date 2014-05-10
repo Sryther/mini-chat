@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "userpersistent.h"
+#include "server.h"
 #include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -38,8 +39,9 @@ void MainWindow::on_inputText_returnPressed()
 {
     if (ui->inputText->text() == "") return;
     Message msg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
-                          "127.0.0.1", ui->inputText->text(), "0.0.0.0");
-    this->appendMessage(msg);
+                          "127.0.0.1", ui->inputText->text(), "255.255.255.255");
+//    this->appendMessage(msg);
+    Server::getInstance(this)->sendMessage(msg);
     ui->inputText->clear();
 }
 

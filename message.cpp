@@ -28,7 +28,7 @@ Message::Message(QString username, QString color, QString from, QString content,
  * @param formattedString
  */
 Message::Message(QString formattedString) {
-    QStringList list = this->parse(formattedString);
+    QStringList list = Message::parse(formattedString);
     _username = list[0];
     _color = list[1];
     _from = list[2];
@@ -86,6 +86,8 @@ QString Message::toQString() {
     str.append(_from);
     str.append(getSeparator());
     str.append(_content);
+    str.append(getSeparator());
+    str.append(_to);
 
     return str;
 }

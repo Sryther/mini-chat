@@ -3,16 +3,23 @@
 #include "message.h"
 #include "userpersistent.h"
 #include <QtNetwork>
+#include <QTcpSocket>
+#include <QUdpSocket>
 
 using namespace std;
 
-Server::Server()
-    : _server(0)
+Server::Server(MainWindow *mainwindow)
+      : _server(0),
+        _mainwindow(mainwindow)
 {
-    listen(QHostAddress::Any);
+    _udpSocket = new QUdpSocket(this);
+    _udpReceiverSocket = new QUdpSocket(this);
+    _udpReceiverSocket->bind(UserPersistent::getInstance()->getPort(), QUdpSocket::ShareAddress);
+    connect(_udpReceiverSocket, SIGNAL(readyRead()),this, SLOT(processPendingDatagrams()));
 }
 
 Server::~Server() {
+    delete _udpSocket;
     Server::_instance = nullptr;
 }
 
@@ -20,9 +27,9 @@ Server::~Server() {
  * @brief Server::getInstance
  * @return
  */
-Server* Server::getInstance() {
+Server* Server::getInstance(MainWindow *mainwindow) {
     if (Server::_instance == nullptr) {
-        Server::_instance = new Server();
+        Server::_instance = new Server(mainwindow);
     }
     return Server::_instance;
 }
@@ -54,8 +61,20 @@ void Server::prepareMessage(QString messageText)
  * @return
  */
 bool Server::sendMessage(Message message) {
-    QString to = message.getDestination();
+    QByteArray data = message.toQString().toUtf8();
+    QHostAddress to = QHostAddress(message.getDestination());
+    _udpSocket->writeDatagram(data, to, UserPersistent::getInstance()->getPort());
     return true;
+}
+
+void Server::processPendingDatagrams()
+{
+    while (_udpReceiverSocket->hasPendingDatagrams()) {
+        QByteArray datagram;
+        datagram.resize(_udpReceiverSocket->pendingDatagramSize());
+        _udpReceiverSocket->readDatagram(datagram.data(), datagram.size());
+        _mainwindow->appendMessage(Message(datagram.data()));
+    }
 }
 
 Server* Server::_instance = nullptr;
