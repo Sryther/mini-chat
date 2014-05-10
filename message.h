@@ -21,12 +21,12 @@ class Message
         static bool isValid(QStringList params);
         bool isValid();
         static const QString& getSeparator() { static QString separator("\x0001"); return separator; }
-        QString getSender() { return _from; };
-        QString getContent() { return _content; };
-        QString getUsername() { return _username; };
-        QString getColor() { return _color; };
-        QString getDestination() { return _to; };
-        uint getTimestamp() { return _timestamp; };
+        QString getSender() { return _from; }
+        QString getContent() { return _content; }
+        QString getUsername() { return _username; }
+        QString getColor() { return _color; }
+        QString getDestination() { return _to; }
+        uint getTimestamp() { return _timestamp; }
     private:
         map<QString, QHostAddress> _users;
         QString _from;

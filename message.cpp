@@ -23,6 +23,10 @@ Message::Message(QString username, QString color, QString from, QString content,
 
 }
 
+/**
+ * @brief Message::Message
+ * @param formattedString
+ */
 Message::Message(QString formattedString) {
     QStringList list = this->parse(formattedString);
     _username = list[0];
