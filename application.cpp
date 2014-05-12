@@ -16,6 +16,7 @@ bool Application::notify(QObject* receiver, QEvent* event) {
   } catch (const std::exception& ex) {
       QMessageBox* box = new QMessageBox();
       box->critical(NULL, "Critical error", ex.what());
+      box = nullptr;
   } catch (...) {
       QMessageBox* box = new QMessageBox();
       box->critical(NULL, "Critical error", "Unknown error");

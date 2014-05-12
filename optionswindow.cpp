@@ -16,6 +16,7 @@ OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
 
 OptionsWindow::~OptionsWindow()
 {
+    usernamePlaceholder = nullptr;
     delete ui;
 }
 

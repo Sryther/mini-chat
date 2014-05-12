@@ -11,6 +11,7 @@ using namespace std;
 class Resolver
 {
     public:
+        ~Resolver();
         static bool findOrNewUser(QString username, QString ip);
         static QMap<QString, QString>* _users;
         static QString resolveUsername(QString username);

@@ -3,6 +3,10 @@
 
 using namespace std;
 
+Resolver::~Resolver() {
+    _users = nullptr;
+}
+
 /**
  * @brief Connection::findOrNewUser
  * @param username
