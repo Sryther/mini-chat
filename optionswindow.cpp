@@ -36,6 +36,9 @@ void OptionsWindow::on_loadButton_clicked() {
 void OptionsWindow::on_saveButton_clicked() {
     if (UserPersistent::getInstance()->getUsername().length() == 0)
         throw std::ios_base::failure("Username cannot be empty");
+    if(UserPersistent::getInstance()->getPort() > 65565 ||
+            UserPersistent::getInstance()->getPort() < 1024)
+        throw std::ios_base::failure("Port must be between 1024 and 65565");
     UserPersistent::getInstance()->savePersistent();
     usernamePlaceholder->setPlaceholderText(UserPersistent::getInstance()->getUsername() + ">");
     if (Server::hasInstance()) Server::getInstance(NULL)->changePort(UserPersistent::getInstance()->getPort());
