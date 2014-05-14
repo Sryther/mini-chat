@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     if (options) delete options;
+    trayIcon->hide();
     delete trayIcon;
     delete ui;
 }
