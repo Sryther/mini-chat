@@ -5,6 +5,9 @@
 #include <QColorDialog>
 #include <QColor>
 #include "server.h"
+#include <exception>
+#include <stdexcept>
+#include <ios>
 
 OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
     QFrame(parent),
@@ -34,6 +37,11 @@ void OptionsWindow::on_loadButton_clicked() {
 }
 
 void OptionsWindow::on_saveButton_clicked() {
+    if (UserPersistent::getInstance()->getUsername().length() == 0)
+        throw std::ios_base::failure("Username cannot be empty");
+    if(UserPersistent::getInstance()->getPort() > 65565 ||
+            UserPersistent::getInstance()->getPort() < 1024)
+        throw std::ios_base::failure("Port must be between 1024 and 65565");
     UserPersistent::getInstance()->savePersistent();
     usernamePlaceholder->setPlaceholderText(UserPersistent::getInstance()->getUsername() + ">");
     if (Server::hasInstance()) Server::getInstance(NULL)->changePort(UserPersistent::getInstance()->getPort());
@@ -57,6 +65,13 @@ QString OptionsWindow::convertColor(QColor color) {
     QString green = QString::number( color.green(), 16 );
     QString blue = QString::number( color.blue(), 16 );
 
+    if (red.length() == 1)
+        red = "0" + red;
+    if (green.length() == 1)
+        green = "0" + green;
+    if (blue.length() == 1)
+        blue = "0" + blue;
+
     return "#" + red + green + blue;
 }
 
@@ -64,7 +79,7 @@ QString OptionsWindow::convertColor(QColor color) {
 
 void OptionsWindow::on_pushButton_clicked()
 {
-    QColor color = QColorDialog::getColor(Qt::white, this);
+    QColor color = QColorDialog::getColor(UserPersistent::getInstance()->getColor(), this);
 
     UserPersistent::getInstance()->setColor(convertColor(color));
     updateFields();

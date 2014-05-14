@@ -22,6 +22,8 @@ Server::Server(MainWindow *mainwindow)
 Server::~Server() {
     _instance = nullptr;
     _mainwindow = nullptr;
+    _udpSocket->close();
+    _udpReceiverSocket->close();
     delete _udpSocket;
     delete _udpReceiverSocket;
 }

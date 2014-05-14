@@ -12,7 +12,7 @@
 
 UserPersistent::UserPersistent() {
     _username = "nouveau";
-    _port = 80;
+    _port = 8000;
     _savefile = new QFile(qApp->applicationDirPath() + "/config.txt");
     if (_savefile->exists()) {
         loadPersistent();
