@@ -5,6 +5,9 @@
 #include <QColorDialog>
 #include <QColor>
 #include "server.h"
+#include <exception>
+#include <stdexcept>
+#include <ios>
 
 OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
     QFrame(parent),
