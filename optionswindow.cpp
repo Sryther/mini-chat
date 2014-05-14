@@ -2,6 +2,8 @@
 #include "ui_optionswindow.h"
 #include "userpersistent.h"
 #include "mainwindow.h"
+#include <QColorDialog>
+#include <QColor>
 
 
 OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
@@ -23,6 +25,7 @@ OptionsWindow::~OptionsWindow()
 void OptionsWindow::updateFields() {
     ui->usernameField->setText(UserPersistent::getInstance()->getUsername());
     ui->portField->setText(QString::number(UserPersistent::getInstance()->getPort()));
+    ui->label_3->setStyleSheet("QLabel { background-color : "+ UserPersistent::getInstance()->getColor() +"; }");
 }
 
 void OptionsWindow::on_loadButton_clicked() {
@@ -43,3 +46,27 @@ void OptionsWindow::on_usernameField_textChanged(const QString &arg1) {
 void OptionsWindow::on_portField_textChanged(const QString &arg1) {
     UserPersistent::getInstance()->setPort(ui->portField->text().toInt());
 }
+
+QColor OptionsWindow::convertColor(QString color) {
+    return QColor(color);
+}
+
+QString OptionsWindow::convertColor(QColor color) {
+    QString red = QString::number( color.red(), 16 );
+    QString green = QString::number( color.green(), 16 );
+    QString blue = QString::number( color.blue(), 16 );
+
+    return "#" + red + green + blue;
+}
+
+
+
+void OptionsWindow::on_pushButton_clicked()
+{
+    QColor color = QColorDialog::getColor(Qt::white, this);
+
+    UserPersistent::getInstance()->setColor(convertColor(color));
+    updateFields();
+}
+
+

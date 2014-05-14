@@ -3,6 +3,8 @@
 
 #include <QFrame>
 #include <QLineEdit>
+#include <QColorDialog>
+#include <QColor>
 
 namespace Ui {
 class OptionsWindow;
@@ -25,10 +27,14 @@ private slots:
 
     void on_portField_textChanged(const QString &arg1);
 
+    void on_pushButton_clicked();
+
 private:
     Ui::OptionsWindow *ui;
     void updateFields();
     QLineEdit* usernamePlaceholder;
+    QString convertColor(QColor color);
+    QColor convertColor(QString color);
 };
 
 #endif // OPTIONSWINDOW_H
