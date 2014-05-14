@@ -12,6 +12,7 @@ private:
     static UserPersistent* _instance;
 public:
     static UserPersistent* getInstance();
+    static bool hasInstance();
 
 private:
     QString _username;

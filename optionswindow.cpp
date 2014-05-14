@@ -4,7 +4,7 @@
 #include "mainwindow.h"
 #include <QColorDialog>
 #include <QColor>
-
+#include "server.h"
 
 OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
     QFrame(parent),
@@ -12,7 +12,7 @@ OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
     usernamePlaceholder (placeholder)
 {
     ui->setupUi(this);
-    UserPersistent::getInstance()->loadPersistent();
+    if (! UserPersistent::hasInstance()) UserPersistent::getInstance()->loadPersistent();
     updateFields();
 }
 
@@ -36,6 +36,7 @@ void OptionsWindow::on_loadButton_clicked() {
 void OptionsWindow::on_saveButton_clicked() {
     UserPersistent::getInstance()->savePersistent();
     usernamePlaceholder->setPlaceholderText(UserPersistent::getInstance()->getUsername() + ">");
+    if (Server::hasInstance()) Server::getInstance(NULL)->changePort(UserPersistent::getInstance()->getPort());
     this->close();
 }
 

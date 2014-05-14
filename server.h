@@ -26,6 +26,8 @@ public:
     static Server* getInstance(MainWindow *mainwindow);
     void prepareMessage(QString messageText);
     bool sendMessage(Message message);
+    void changePort(int port);
+    static bool hasInstance();
 signals:
     void newConnection(Connection *connection);
 private slots:

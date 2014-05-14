@@ -39,6 +39,10 @@ UserPersistent* UserPersistent::getInstance() {
     return UserPersistent::_instance;
 }
 
+bool UserPersistent::hasInstance() {
+    return UserPersistent::_instance != nullptr;
+}
+
 void UserPersistent::savePersistent() {
     if (!_savefile->open(QIODevice::WriteOnly | QIODevice::Text))
         throw std::ios_base::failure("Unable to write to file");

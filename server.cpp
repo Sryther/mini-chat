@@ -5,6 +5,7 @@
 #include <QtNetwork>
 #include <QTcpSocket>
 #include <QUdpSocket>
+#include <exception>
 
 using namespace std;
 
@@ -67,6 +68,16 @@ bool Server::sendMessage(Message message) {
     QHostAddress to = QHostAddress(message.getDestination());
     _udpSocket->writeDatagram(data, to, UserPersistent::getInstance()->getPort());
     return true;
+}
+
+void Server::changePort(int port) {
+    _udpReceiverSocket->close();
+    _udpReceiverSocket->bind(UserPersistent::getInstance()->getPort(), QUdpSocket::ShareAddress);
+    _udpReceiverSocket->open(QIODevice::ReadOnly);
+}
+
+bool Server::hasInstance() {
+    return Server::_instance != nullptr;
 }
 
 void Server::processPendingDatagrams()
