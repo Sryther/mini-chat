@@ -34,6 +34,8 @@ void OptionsWindow::on_loadButton_clicked() {
 }
 
 void OptionsWindow::on_saveButton_clicked() {
+    if (UserPersistent::getInstance()->getUsername().length() == 0)
+        throw std::ios_base::failure("Username cannot be empty");
     UserPersistent::getInstance()->savePersistent();
     usernamePlaceholder->setPlaceholderText(UserPersistent::getInstance()->getUsername() + ">");
     if (Server::hasInstance()) Server::getInstance(NULL)->changePort(UserPersistent::getInstance()->getPort());
@@ -56,6 +58,13 @@ QString OptionsWindow::convertColor(QColor color) {
     QString red = QString::number( color.red(), 16 );
     QString green = QString::number( color.green(), 16 );
     QString blue = QString::number( color.blue(), 16 );
+
+    if (red.length() == 1)
+        red = "0" + red;
+    if (green.length() == 1)
+        green = "0" + green;
+    if (blue.length() == 1)
+        blue = "0" + blue;
 
     return "#" + red + green + blue;
 }
