@@ -64,7 +64,7 @@ QString OptionsWindow::convertColor(QColor color) {
 
 void OptionsWindow::on_pushButton_clicked()
 {
-    QColor color = QColorDialog::getColor(Qt::white, this);
+    QColor color = QColorDialog::getColor(UserPersistent::getInstance()->getColor(), this);
 
     UserPersistent::getInstance()->setColor(convertColor(color));
     updateFields();
