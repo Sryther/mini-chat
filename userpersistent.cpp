@@ -41,6 +41,11 @@ UserPersistent* UserPersistent::getInstance() {
     return UserPersistent::_instance;
 }
 
+void UserPersistent::delInstance() {
+    if (UserPersistent::_instance) delete UserPersistent::_instance;
+    UserPersistent::_instance = nullptr;
+}
+
 bool UserPersistent::hasInstance() {
     return UserPersistent::_instance != nullptr;
 }
