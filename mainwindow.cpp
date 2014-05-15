@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     trayIcon->setToolTip("Mini-Chat");
     trayIcon->setIcon(icon);
     trayIcon->show();
+    options = new OptionsWindow(0,ui->inputText);
     Message msg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
                           "127.0.0.1", "*connecté*", "255.255.255.255");
     Server::getInstance(this)->sendMessage(msg);
@@ -25,10 +26,14 @@ MainWindow::~MainWindow()
     Message msg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
                           "127.0.0.1", "*déconnecté*", "255.255.255.255");
     Server::getInstance(this)->sendMessage(msg);
+    UserPersistent::delInstance();
+    Server::delInstance();
     if (options) delete options;
-    trayIcon->hide();
-    delete trayIcon;
-    delete ui;
+    options = nullptr;
+    if (trayIcon) delete trayIcon;
+    trayIcon = nullptr;
+    if (ui) delete ui;
+    ui = nullptr;
 }
 
 void MainWindow::on_actionFermer_triggered()
@@ -38,7 +43,6 @@ void MainWindow::on_actionFermer_triggered()
 
 void MainWindow::on_actionOptions_triggered()
 {
-    options = new OptionsWindow(0,ui->inputText);
     options->show();
 }
 

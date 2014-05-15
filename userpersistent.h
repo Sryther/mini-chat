@@ -12,6 +12,7 @@ private:
     static UserPersistent* _instance;
 public:
     static UserPersistent* getInstance();
+    static void delInstance();
     static bool hasInstance();
 
 private:

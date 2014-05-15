@@ -20,12 +20,13 @@ Server::Server(MainWindow *mainwindow)
 }
 
 Server::~Server() {
-    _instance = nullptr;
-    _mainwindow = nullptr;
     _udpSocket->close();
     _udpReceiverSocket->close();
-    delete _udpSocket;
-    delete _udpReceiverSocket;
+    _mainwindow = nullptr;
+    if (_udpSocket) delete _udpSocket;
+    _udpSocket = nullptr;
+    if (_udpReceiverSocket) delete _udpReceiverSocket;
+    _udpReceiverSocket = nullptr;
 }
 
 /**
@@ -37,6 +38,11 @@ Server* Server::getInstance(MainWindow *mainwindow) {
         Server::_instance = new Server(mainwindow);
     }
     return Server::_instance;
+}
+
+void Server::delInstance() {
+    if (Server::_instance) delete Server::_instance;
+    Server::_instance = nullptr;
 }
 
 /**

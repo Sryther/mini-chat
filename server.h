@@ -24,6 +24,7 @@ private:
     QUdpSocket* _udpReceiverSocket;
 public:
     static Server* getInstance(MainWindow *mainwindow);
+    static void delInstance();
     void prepareMessage(QString messageText);
     bool sendMessage(Message message);
     void changePort(int port);
