@@ -43,6 +43,7 @@ void MainWindow::on_actionFermer_triggered()
 
 void MainWindow::on_actionOptions_triggered()
 {
+    options->updateFields();
     options->show();
 }
 

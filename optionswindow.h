@@ -16,22 +16,16 @@ class OptionsWindow : public QFrame
 
 public:
     explicit OptionsWindow(QWidget *parent = 0, QLineEdit *placeholder = nullptr);
+    void updateFields();
     ~OptionsWindow();
 
 private slots:
     void on_loadButton_clicked();
-
     void on_saveButton_clicked();
-
-    void on_usernameField_textChanged(const QString &arg1);
-
-    void on_portField_textChanged(const QString &arg1);
-
     void on_pushButton_clicked();
 
 private:
     Ui::OptionsWindow *ui;
-    void updateFields();
     QLineEdit* usernamePlaceholder;
     QString convertColor(QColor color);
     QColor convertColor(QString color);
