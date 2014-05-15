@@ -21,8 +21,10 @@ OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
 
 OptionsWindow::~OptionsWindow()
 {
+    delete usernamePlaceholder;
     usernamePlaceholder = nullptr;
     delete ui;
+    ui = nullptr;
 }
 
 void OptionsWindow::updateFields() {

@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    this->setAttribute(Qt::WA_QuitOnClose);
     ui->setupUi(this);
     ui->inputText->setPlaceholderText(UserPersistent::getInstance()->getUsername() + "> ");
     QIcon icon(":/icons/sms-call.png");
@@ -25,10 +26,14 @@ MainWindow::~MainWindow()
     Message msg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
                           "127.0.0.1", "*déconnecté*", "255.255.255.255");
     Server::getInstance(this)->sendMessage(msg);
-    if (options) delete options;
+    delete options;
+    options = nullptr;
     trayIcon->hide();
     delete trayIcon;
+    trayIcon = nullptr;
     delete ui;
+    ui = nullptr;
+    QCoreApplication::exit();
 }
 
 void MainWindow::on_actionFermer_triggered()

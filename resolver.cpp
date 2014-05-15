@@ -4,6 +4,7 @@
 using namespace std;
 
 Resolver::~Resolver() {
+    delete _users;
     _users = nullptr;
 }
 
