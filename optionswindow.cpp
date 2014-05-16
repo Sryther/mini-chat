@@ -39,23 +39,20 @@ void OptionsWindow::on_loadButton_clicked() {
 }
 
 void OptionsWindow::on_saveButton_clicked() {
-    if (UserPersistent::getInstance()->getUsername().length() == 0)
+    if (ui->usernameField->text().length() == 0)
         throw std::ios_base::failure("Username cannot be empty");
-    if(UserPersistent::getInstance()->getPort() > 65565 ||
-            UserPersistent::getInstance()->getPort() < 1024)
+    else
+        UserPersistent::getInstance()->setUsername(ui->usernameField->text());
+    if(ui->portField->text().toInt() > 65565 ||
+            ui->portField->text().toInt() < 1024)
         throw std::ios_base::failure("Port must be between 1024 and 65565");
+
+    else
+        UserPersistent::getInstance()->setPort(ui->portField->text().toInt());
     UserPersistent::getInstance()->savePersistent();
     usernamePlaceholder->setPlaceholderText(UserPersistent::getInstance()->getUsername() + ">");
     if (Server::hasInstance()) Server::getInstance(NULL)->changePort(UserPersistent::getInstance()->getPort());
     this->close();
-}
-
-void OptionsWindow::on_usernameField_textChanged(const QString &arg1) {
-    UserPersistent::getInstance()->setUsername(ui->usernameField->text());
-}
-
-void OptionsWindow::on_portField_textChanged(const QString &arg1) {
-    UserPersistent::getInstance()->setPort(ui->portField->text().toInt());
 }
 
 QColor OptionsWindow::convertColor(QString color) {
@@ -82,7 +79,6 @@ QString OptionsWindow::convertColor(QColor color) {
 void OptionsWindow::on_pushButton_clicked()
 {
     QColor color = QColorDialog::getColor(UserPersistent::getInstance()->getColor(), this);
-
     UserPersistent::getInstance()->setColor(convertColor(color));
     updateFields();
 }
