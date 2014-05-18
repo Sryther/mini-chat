@@ -10,21 +10,21 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     this->setAttribute(Qt::WA_QuitOnClose);
     ui->setupUi(this);
-    ui->inputText->setPlaceholderText(UserPersistent::getInstance()->getUsername() + "> ");
+    ui->inputText->setPlaceholderText(UserPersistent::getUsername() + "> ");
     QIcon icon(":/icons/sms-call.png");
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setToolTip("Mini-Chat");
     trayIcon->setIcon(icon);
     trayIcon->show();
     options = new OptionsWindow(0,ui->inputText);
-    Message msg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
+    Message msg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
                           "127.0.0.1", "*connecté*", "255.255.255.255");
     Server::getInstance(this)->sendMessage(msg);
 }
 
 MainWindow::~MainWindow()
 {
-    Message msg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
+    Message msg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
                           "127.0.0.1", "*déconnecté*", "255.255.255.255");
     Server::getInstance(this)->sendMessage(msg);
     UserPersistent::delInstance();
@@ -51,7 +51,7 @@ void MainWindow::on_actionOptions_triggered()
 void MainWindow::on_inputText_returnPressed()
 {
     if (ui->inputText->text() == "") return;
-    Message msg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
+    Message msg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
                           "127.0.0.1", ui->inputText->text(), "255.255.255.255");
 //    this->appendMessage(msg);
     Server::getInstance(this)->sendMessage(msg);

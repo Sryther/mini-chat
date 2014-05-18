@@ -28,9 +28,9 @@ UserPersistent::UserPersistent() {
 }
 
 UserPersistent::~UserPersistent() {
-    delete _instance;
+    if (_instance) delete _instance;
     _instance = nullptr;
-    delete _savefile;
+    if (_savefile) delete _savefile;
     _savefile = nullptr;
 }
 
@@ -87,6 +87,30 @@ void UserPersistent::_loadPersistent() {
 
 void UserPersistent::loadPersistent() {
     UserPersistent::getInstance()->_loadPersistent();
+}
+
+QString UserPersistent::getColor() {
+    UserPersistent::getInstance()->_getColor();
+}
+
+int UserPersistent::getPort() {
+    UserPersistent::getInstance()->_getPort();
+}
+
+QString UserPersistent::getUsername() {
+    UserPersistent::getInstance()->_getUsername();
+}
+
+void UserPersistent::setColor(QString color) {
+    UserPersistent::getInstance()->_setColor(color);
+}
+
+void UserPersistent::setPort(int port) {
+    UserPersistent::getInstance()->_setPort(port);
+}
+
+void UserPersistent::setUsername(QString username) {
+    UserPersistent::getInstance()->_setUsername(username);
 }
 
 UserPersistent* UserPersistent::_instance = nullptr;

@@ -28,9 +28,9 @@ OptionsWindow::~OptionsWindow()
 }
 
 void OptionsWindow::updateFields() {
-    ui->usernameField->setText(UserPersistent::getInstance()->getUsername());
-    ui->portField->setText(QString::number(UserPersistent::getInstance()->getPort()));
-    ui->label_3->setStyleSheet("QLabel { background-color : "+ UserPersistent::getInstance()->getColor() +"; }");
+    ui->usernameField->setText(UserPersistent::getUsername());
+    ui->portField->setText(QString::number(UserPersistent::getPort()));
+    ui->label_3->setStyleSheet("QLabel { background-color : "+ UserPersistent::getColor() +"; }");
 }
 
 void OptionsWindow::on_loadButton_clicked() {
@@ -42,16 +42,16 @@ void OptionsWindow::on_saveButton_clicked() {
     if (ui->usernameField->text().length() == 0)
         throw std::ios_base::failure("Username cannot be empty");
     else
-        UserPersistent::getInstance()->setUsername(ui->usernameField->text());
+        UserPersistent::setUsername(ui->usernameField->text());
     if(ui->portField->text().toInt() > 65565 ||
             ui->portField->text().toInt() < 1024)
         throw std::ios_base::failure("Port must be between 1024 and 65565");
 
     else
-        UserPersistent::getInstance()->setPort(ui->portField->text().toInt());
+        UserPersistent::setPort(ui->portField->text().toInt());
     UserPersistent::savePersistent();
-    usernamePlaceholder->setPlaceholderText(UserPersistent::getInstance()->getUsername() + ">");
-    if (Server::hasInstance()) Server::getInstance(NULL)->changePort(UserPersistent::getInstance()->getPort());
+    usernamePlaceholder->setPlaceholderText(UserPersistent::getUsername() + ">");
+    if (Server::hasInstance()) Server::getInstance(NULL)->changePort(UserPersistent::getPort());
     this->close();
 }
 
@@ -78,8 +78,8 @@ QString OptionsWindow::convertColor(QColor color) {
 
 void OptionsWindow::on_pushButton_clicked()
 {
-    QColor color = QColorDialog::getColor(UserPersistent::getInstance()->getColor(), this);
-    UserPersistent::getInstance()->setColor(convertColor(color));
+    QColor color = QColorDialog::getColor(UserPersistent::getColor(), this);
+    UserPersistent::setColor(convertColor(color));
     updateFields();
 }
 

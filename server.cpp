@@ -15,7 +15,7 @@ Server::Server(MainWindow *mainwindow)
 {
     _udpSocket = new QUdpSocket(this);
     _udpReceiverSocket = new QUdpSocket(this);
-    _udpReceiverSocket->bind(UserPersistent::getInstance()->getPort(), QUdpSocket::ShareAddress);
+    _udpReceiverSocket->bind(UserPersistent::getPort(), QUdpSocket::ShareAddress);
     connect(_udpReceiverSocket, SIGNAL(readyRead()),this, SLOT(processPendingDatagrams()));
 }
 
@@ -54,8 +54,8 @@ void Server::prepareMessage(QString messageText)
     if (messageText.isEmpty())
         return;
 
-    QString username = UserPersistent::getInstance()->getUsername();
-    QString color = UserPersistent::getInstance()->getColor();
+    QString username = UserPersistent::getUsername();
+    QString color = UserPersistent::getColor();
     QString from = "127.0.0.1"; // TODO: Change for a real wan ip
     QMap<QString, QString>::iterator i;
     for (i = Resolver::_users->begin(); i != Resolver::_users->end(); ++i) {
@@ -74,13 +74,13 @@ void Server::prepareMessage(QString messageText)
 bool Server::sendMessage(Message message) {
     QByteArray data = message.toQString().toUtf8();
     QHostAddress to = QHostAddress(message.getDestination());
-    _udpSocket->writeDatagram(data, to, UserPersistent::getInstance()->getPort());
+    _udpSocket->writeDatagram(data, to, UserPersistent::getPort());
     return true;
 }
 
 void Server::changePort(int port) {
     _udpReceiverSocket->close();
-    _udpReceiverSocket->bind(UserPersistent::getInstance()->getPort(), QUdpSocket::ShareAddress);
+    _udpReceiverSocket->bind(UserPersistent::getPort(), QUdpSocket::ShareAddress);
     _udpReceiverSocket->open(QIODevice::ReadOnly);
 }
 
