@@ -15,7 +15,7 @@ OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
     usernamePlaceholder (placeholder)
 {
     ui->setupUi(this);
-    if (! UserPersistent::hasInstance()) UserPersistent::getInstance()->loadPersistent();
+    if (! UserPersistent::hasInstance()) UserPersistent::loadPersistent();
     updateFields();
 }
 
@@ -34,7 +34,7 @@ void OptionsWindow::updateFields() {
 }
 
 void OptionsWindow::on_loadButton_clicked() {
-    UserPersistent::getInstance()->loadPersistent();
+    UserPersistent::loadPersistent();
     updateFields();
 }
 
@@ -49,7 +49,7 @@ void OptionsWindow::on_saveButton_clicked() {
 
     else
         UserPersistent::getInstance()->setPort(ui->portField->text().toInt());
-    UserPersistent::getInstance()->savePersistent();
+    UserPersistent::savePersistent();
     usernamePlaceholder->setPlaceholderText(UserPersistent::getInstance()->getUsername() + ">");
     if (Server::hasInstance()) Server::getInstance(NULL)->changePort(UserPersistent::getInstance()->getPort());
     this->close();

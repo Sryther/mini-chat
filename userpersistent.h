@@ -20,6 +20,8 @@ private:
     int _port;
     QString _color;
     QFile* _savefile;
+    void _savePersistent();
+    void _loadPersistent();
 public:
     QString getUsername() { return _username; };
     void setUsername(QString username) { _username = username; };
@@ -30,8 +32,8 @@ public:
     QString getColor() { return _color; };
     void setColor(QString color) { _color = color; };
 
-    void savePersistent();
-    void loadPersistent();
+    void static savePersistent();
+    void static loadPersistent();
 };
 
 #endif // USER_H

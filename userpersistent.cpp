@@ -15,7 +15,7 @@ UserPersistent::UserPersistent() {
     _port = 8000;
     _savefile = new QFile(qApp->applicationDirPath() + "/config.txt");
     if (_savefile->exists()) {
-        loadPersistent();
+        _loadPersistent();
     } else {
         qsrand(QDateTime::currentDateTime().toTime_t());
         QString colors = "0123456789ABCDEF";
@@ -23,7 +23,7 @@ UserPersistent::UserPersistent() {
         for (int i = 0; i < 6; i++) {
             _color += QString(colors.at(qrand() % 16));
         }
-        savePersistent();
+        _savePersistent();
     }
 }
 
@@ -51,6 +51,10 @@ bool UserPersistent::hasInstance() {
 }
 
 void UserPersistent::savePersistent() {
+    UserPersistent::getInstance()->_savePersistent();
+}
+
+void UserPersistent::_savePersistent() {
     if (!_savefile->open(QIODevice::WriteOnly | QIODevice::Text))
         throw std::ios_base::failure("Unable to write to file");
 
@@ -63,7 +67,7 @@ void UserPersistent::savePersistent() {
     _savefile->close();
 }
 
-void UserPersistent::loadPersistent() {
+void UserPersistent::_loadPersistent() {
     if (!_savefile->open(QIODevice::ReadOnly | QIODevice::Text))
         throw std::ios_base::failure("Unable to read file");
 
@@ -79,6 +83,10 @@ void UserPersistent::loadPersistent() {
         }
     }
     _savefile->close();
+}
+
+void UserPersistent::loadPersistent() {
+    UserPersistent::getInstance()->_loadPersistent();
 }
 
 UserPersistent* UserPersistent::_instance = nullptr;
