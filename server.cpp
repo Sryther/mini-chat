@@ -10,8 +10,7 @@
 using namespace std;
 
 Server::Server(MainWindow *mainwindow)
-      : _server(0),
-        _mainwindow(mainwindow)
+      : _mainwindow(mainwindow)
 {
     _udpSocket = new QUdpSocket(this);
     _udpReceiverSocket = new QUdpSocket(this);

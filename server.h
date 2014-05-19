@@ -34,7 +34,6 @@ signals:
 private slots:
     void processPendingDatagrams();
 private:
-    QTcpServer _server;
     int _decal = 159;
     QChar rot(QChar letter, int decal);
 };

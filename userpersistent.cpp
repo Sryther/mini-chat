@@ -88,27 +88,27 @@ void UserPersistent::loadPersistent() {
 }
 
 QString UserPersistent::getColor() {
-    UserPersistent::getInstance()->_getColor();
+    return UserPersistent::getInstance()->_color;
 }
 
 int UserPersistent::getPort() {
-    UserPersistent::getInstance()->_getPort();
+    return UserPersistent::getInstance()->_port;
 }
 
 QString UserPersistent::getUsername() {
-    UserPersistent::getInstance()->_getUsername();
+    return UserPersistent::getInstance()->_username;
 }
 
 void UserPersistent::setColor(QString color) {
-    UserPersistent::getInstance()->_setColor(color);
+    UserPersistent::getInstance()->_color = color;
 }
 
 void UserPersistent::setPort(int port) {
-    UserPersistent::getInstance()->_setPort(port);
+    UserPersistent::getInstance()->_port = port;
 }
 
 void UserPersistent::setUsername(QString username) {
-    UserPersistent::getInstance()->_setUsername(username);
+    UserPersistent::getInstance()->_username = username;
 }
 
 UserPersistent* UserPersistent::_instance = nullptr;
