@@ -66,7 +66,7 @@ bool Server::sendMessage(Message message) {
     }
     QByteArray data = texte.toUtf8();
     QHostAddress to = QHostAddress(message.getDestination());
-    _udpSocket->writeDatagram(data, to, UserPersistent::getPort());
+    Server::getInstance()->_udpSocket->writeDatagram(data, to, UserPersistent::getPort());
     return true;
 }
 

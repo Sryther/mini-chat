@@ -6,9 +6,20 @@
 #include <QEvent>
 #include <QApplication>
 
+/**
+ * @brief Application::Application
+ * @param argc
+ * @param argv
+ */
 Application::Application(int& argc, char** argv) :
   QApplication(argc, argv) {}
 
+/**
+ * @brief Application::notify
+ * @param receiver
+ * @param event
+ * @return
+ */
 bool Application::notify(QObject* receiver, QEvent* event) {
   bool done = true;
   try {

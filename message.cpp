@@ -48,6 +48,11 @@ QStringList Message::parse(QString formatedString) {
     return strings;
 }
 
+/**
+ * @brief Message::isValid
+ * @param params
+ * @return
+ */
 bool Message::isValid(QStringList params) {
     try {
         QHostAddress host = QHostAddress(params[1]); // Is a valid IP Address
@@ -61,6 +66,10 @@ bool Message::isValid(QStringList params) {
     }
 }
 
+/**
+ * @brief Message::isValid
+ * @return
+ */
 bool Message::isValid() {
     try {
         QHostAddress host = QHostAddress(_from); // Is a valid IP Address
