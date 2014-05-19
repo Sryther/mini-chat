@@ -119,7 +119,7 @@ QChar Server::rot(QChar letter, int decal) {
     } else if (c >= 'a' && c <= 'z') {
         return ((c - 'a' + decal) % 26) + 'a';
     } else {
-        return c;
+        return letter;
     }
 }
 
