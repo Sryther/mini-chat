@@ -45,6 +45,14 @@ void Server::create(MainWindow *mainwindow) {
     }
 }
 
+Server* Server::getInstance() {
+    if (Server::_instance) {
+        return Server::_instance;
+    } else {
+        throw logic_error("Server is not running");
+    }
+}
+
 /**
  * @brief Server::delInstance
  */
