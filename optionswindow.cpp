@@ -41,14 +41,31 @@ void OptionsWindow::on_loadButton_clicked() {
 void OptionsWindow::on_saveButton_clicked() {
     if (ui->usernameField->text().length() == 0)
         throw std::ios_base::failure("Username cannot be empty");
-    else
-        UserPersistent::setUsername(ui->usernameField->text());
+
+    else {
+        if (ui->usernameField->text() != UserPersistent::getInstance()->getUsername()){
+            Message nameChangedMsg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
+                                "127.0.0.1", "est maintenant *" + ui->usernameField->text() + "*", "255.255.255.255");
+            Server::getInstance(0)->sendMessage(nameChangedMsg);
+        }
+        UserPersistent::getInstance()->setUsername(ui->usernameField->text());
+    }
+
+
     if(ui->portField->text().toInt() > 65565 ||
             ui->portField->text().toInt() < 1024)
         throw std::ios_base::failure("Port must be between 1024 and 65565");
 
-    else
-        UserPersistent::setPort(ui->portField->text().toInt());
+    else {
+        if (ui->portField->text().toInt() != UserPersistent::getInstance()->getPort()){
+            Message portChangedMsg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
+                                 "127.0.0.1", "*s'est déplacé*", "255.255.255.255");
+            Server::getInstance(0)->sendMessage(portChangedMsg);
+        }
+        UserPersistent::getInstance()->setPort(ui->portField->text().toInt());
+    }
+
+
     UserPersistent::savePersistent();
     usernamePlaceholder->setPlaceholderText(UserPersistent::getUsername() + ">");
     if (Server::hasInstance()) Server::getInstance(NULL)->changePort();
