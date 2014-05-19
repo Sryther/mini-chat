@@ -58,13 +58,17 @@ void Server::delInstance() {
  * @param message
  * @return
  */
-bool Server::sendMessage(Message message) {
+bool Server::sendMessage(Message message, bool system) {
     QString texte = "";
     for (auto c : message.toQString()) {
         QChar encode = _instance->rot(c, (_instance->_decal % 26));
         texte.append(encode);
     }
-    QByteArray data = texte.toUtf8();
+    if (system) {
+        message.setUsername("*system");
+        message.setColor("#DFAF2C");
+    }
+    QByteArray data = (texte + "*").toUtf8();
     QHostAddress to = QHostAddress(message.getDestination());
     _instance->_udpSocket->writeDatagram(data, to, UserPersistent::getPort());
     return true;

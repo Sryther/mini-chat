@@ -25,7 +25,7 @@ private:
 public:
     static Server* create(MainWindow *mainwindow);
     static void delInstance();
-    static bool sendMessage(Message message);
+    static bool sendMessage(Message message, bool system = false);
     static void changePort();
     static bool hasInstance();
 signals:
