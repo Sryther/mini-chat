@@ -22,12 +22,6 @@ private:
     QFile* _savefile;
     void _savePersistent();
     void _loadPersistent();
-    QString _getColor() { return _color; }
-    int _getPort() { return _port; }
-    QString _getUsername() { return _username; }
-    void _setUsername(QString username) { _username = username; }
-    void _setPort(int port) { _port = port; }
-    void _setColor(QString color) { _color = color; }
 public:
     void static setColor(QString color);
     void static setPort(int port);

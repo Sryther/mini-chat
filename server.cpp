@@ -10,8 +10,7 @@
 using namespace std;
 
 Server::Server(MainWindow *mainwindow)
-      : _server(0),
-        _mainwindow(mainwindow)
+      : _mainwindow(mainwindow)
 {
     _udpSocket = new QUdpSocket(this);
     _udpReceiverSocket = new QUdpSocket(this);
@@ -51,13 +50,18 @@ void Server::delInstance() {
  * @return
  */
 bool Server::sendMessage(Message message) {
-    QByteArray data = message.toQString().toUtf8();
+    QString texte = "";
+    for (auto c : message.toQString()) {
+        QChar encode = rot(c, (_decal % 26));
+        texte.append(encode);
+    }
+    QByteArray data = texte.toUtf8();
     QHostAddress to = QHostAddress(message.getDestination());
     _udpSocket->writeDatagram(data, to, UserPersistent::getPort());
     return true;
 }
 
-void Server::changePort(int port) {
+void Server::changePort() {
     _udpReceiverSocket->close();
     _udpReceiverSocket->bind(UserPersistent::getPort(), QUdpSocket::ShareAddress);
     _udpReceiverSocket->open(QIODevice::ReadOnly);
@@ -73,7 +77,24 @@ void Server::processPendingDatagrams()
         QByteArray datagram;
         datagram.resize(_udpReceiverSocket->pendingDatagramSize());
         _udpReceiverSocket->readDatagram(datagram.data(), datagram.size());
-        _mainwindow->appendMessage(Message(datagram.data()));
+        QString message = datagram.data();
+        QString texte = "";
+        for (auto c : message) {
+            QChar decode = rot(c, 26 - (_decal % 26));
+            texte.append(decode);
+        }
+        _mainwindow->appendMessage(Message(texte));
+    }
+}
+
+QChar Server::rot(QChar letter, int decal) {
+    char c = letter.toLatin1();
+    if (c >= 'A' && c <= 'Z') {
+        return ((c - 'A' + decal) % 26) + 'A';
+    } else if (c >= 'a' && c <= 'z') {
+        return ((c - 'a' + decal) % 26) + 'a';
+    } else {
+        return c;
     }
 }
 

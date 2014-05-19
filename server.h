@@ -27,14 +27,15 @@ public:
     static void delInstance();
     void prepareMessage(QString messageText);
     bool sendMessage(Message message);
-    void changePort(int port);
+    void changePort();
     static bool hasInstance();
 signals:
     void newConnection(Connection *connection);
 private slots:
     void processPendingDatagrams();
 private:
-    QTcpServer _server;
+    int _decal = 159;
+    QChar rot(QChar letter, int decal);
 };
 
 #endif // SERVER_H

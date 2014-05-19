@@ -10,9 +10,9 @@ using namespace std;
  * @param username
  * @param from Sender's IP
  * @param content
- * @param to Destination IP 0.0.0.0 <=> broadcast
+ * @param to Destination IP 255.255.255.255 <=> broadcast
  */
-Message::Message(QString username, QString color, QString from, QString content, QString to = "0.0.0.0") :
+Message::Message(QString username, QString color, QString from, QString content, QString to = "255.255.255.255") :
     _username(username),
     _color(color),
     _from(from),
