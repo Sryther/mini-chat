@@ -100,3 +100,12 @@ QString Message::toQString() {
 
     return str;
 }
+
+static QString Message::paint(QString text, QString color, QString title){
+    if (title.length() == 0){
+        return "<span style='font-weight:bold; color:" + color + "'>" + text + "</span>";
+    }
+    else{
+        return "<span style='font-weight:bold; color:" + color + "'title='" + title + "'>" + text + "</span>";
+    }
+}

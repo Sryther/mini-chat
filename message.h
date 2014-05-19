@@ -30,6 +30,8 @@ class Message
         void setColor(QString color) { _color = color; }
         QString getDestination() { return _to; }
         uint getTimestamp() { return _timestamp; }
+        static QString paint(QString text, QString color, QString title = "");
+
     private:
         map<QString, QHostAddress> _users;
         QString _from;
