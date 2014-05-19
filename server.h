@@ -23,7 +23,8 @@ private:
     QUdpSocket* _udpSocket;
     QUdpSocket* _udpReceiverSocket;
 public:
-    static Server* create(MainWindow *mainwindow);
+    static void create(MainWindow *mainwindow);
+    static Server* getInstance();
     static void delInstance();
     static bool sendMessage(Message message);
     static void changePort();

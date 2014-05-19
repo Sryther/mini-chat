@@ -39,7 +39,7 @@ Server::~Server() {
  * @param mainwindow
  * @return
  */
-Server* Server::create(MainWindow *mainwindow) {
+void Server::create(MainWindow *mainwindow) {
     if (Server::_instance == nullptr) {
         Server::_instance = new Server(mainwindow);
     }
