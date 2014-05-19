@@ -25,7 +25,6 @@ private:
 public:
     static Server* getInstance(MainWindow *mainwindow);
     static void delInstance();
-    void prepareMessage(QString messageText);
     bool sendMessage(Message message);
     void changePort();
     static bool hasInstance();

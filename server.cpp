@@ -8,15 +8,22 @@
 
 using namespace std;
 
-Server::Server(MainWindow *mainwindow)
-      : _mainwindow(mainwindow)
+/**
+ * @brief Server::Server
+ * @param mainwindow
+ */
+Server::Server(MainWindow *mainwindow) :
+      _mainwindow(mainwindow),
+      _udpSocket(new QUdpSocket(this)),
+      _udpReceiverSocket(new QUdpSocket(this))
 {
-    _udpSocket = new QUdpSocket(this);
-    _udpReceiverSocket = new QUdpSocket(this);
     _udpReceiverSocket->bind(UserPersistent::getPort(), QUdpSocket::ShareAddress);
     connect(_udpReceiverSocket, SIGNAL(readyRead()),this, SLOT(processPendingDatagrams()));
 }
 
+/**
+ * @brief Server::~Server
+ */
 Server::~Server() {
     _udpSocket->close();
     _udpReceiverSocket->close();
@@ -38,6 +45,9 @@ Server* Server::getInstance(MainWindow *mainwindow) {
     return Server::_instance;
 }
 
+/**
+ * @brief Server::delInstance
+ */
 void Server::delInstance() {
     if (Server::_instance) delete Server::_instance;
     Server::_instance = nullptr;
@@ -60,16 +70,26 @@ bool Server::sendMessage(Message message) {
     return true;
 }
 
+/**
+ * @brief Server::changePort
+ */
 void Server::changePort() {
     _udpReceiverSocket->close();
     _udpReceiverSocket->bind(UserPersistent::getPort(), QUdpSocket::ShareAddress);
     _udpReceiverSocket->open(QIODevice::ReadOnly);
 }
 
+/**
+ * @brief Server::hasInstance
+ * @return
+ */
 bool Server::hasInstance() {
     return Server::_instance != nullptr;
 }
 
+/**
+ * @brief Server::processPendingDatagrams
+ */
 void Server::processPendingDatagrams()
 {
     while (_udpReceiverSocket->hasPendingDatagrams()) {
@@ -86,6 +106,12 @@ void Server::processPendingDatagrams()
     }
 }
 
+/**
+ * @brief Server::rot
+ * @param letter
+ * @param decal
+ * @return
+ */
 QChar Server::rot(QChar letter, int decal) {
     char c = letter.toLatin1();
     if (c >= 'A' && c <= 'Z') {
