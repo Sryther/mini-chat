@@ -95,14 +95,17 @@ void Server::processPendingDatagrams()
     while (_udpReceiverSocket->hasPendingDatagrams()) {
         QByteArray datagram;
         datagram.resize(_udpReceiverSocket->pendingDatagramSize());
-        _udpReceiverSocket->readDatagram(datagram.data(), datagram.size());
-        QString message = datagram.data();
+        QHostAddress from;
+        _udpReceiverSocket->readDatagram(datagram.data(), datagram.size(), &from);
+        QString datas = datagram.data();
         QString texte = "";
-        for (auto c : message) {
+        for (auto c : datas) {
             QChar decode = rot(c, 26 - (_decal % 26));
             texte.append(decode);
         }
-        _mainwindow->appendMessage(Message(texte));
+        Message message = Message(texte);
+        message.setSender(from.toString());
+        _mainwindow->appendMessage(message);
     }
 }
 
