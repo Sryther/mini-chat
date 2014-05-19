@@ -22,6 +22,7 @@ class Message
         bool isValid();
         static const QString& getSeparator() { static QString separator("\x0001"); return separator; }
         QString getSender() { return _from; }
+        void setSender(QString from) { _from = from; }
         QString getContent() { return _content; }
         QString getUsername() { return _username; }
         QString getColor() { return _color; }
