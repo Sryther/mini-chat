@@ -25,7 +25,9 @@ class Message
         void setSender(QString from) { _from = from; }
         QString getContent() { return _content; }
         QString getUsername() { return _username; }
+        void setUsername(QString username) { _username = username; }
         QString getColor() { return _color; }
+        void setColor(QString color) { _color = color; }
         QString getDestination() { return _to; }
         uint getTimestamp() { return _timestamp; }
     private:
