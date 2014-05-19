@@ -46,7 +46,7 @@ void OptionsWindow::on_saveButton_clicked() {
         if (ui->usernameField->text() != UserPersistent::getInstance()->getUsername()){
             Message nameChangedMsg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
                                 "127.0.0.1", "*est maintenant " + ui->usernameField->text() + "*", "255.255.255.255");
-            Server::getInstance(0)->sendMessage(nameChangedMsg);
+            Server::sendMessage(nameChangedMsg);
         }
         UserPersistent::getInstance()->setUsername(ui->usernameField->text());
     }
@@ -60,15 +60,15 @@ void OptionsWindow::on_saveButton_clicked() {
         if (ui->portField->text().toInt() != UserPersistent::getInstance()->getPort()){
             Message portChangedMsg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
                                  "127.0.0.1", "*s'est déplacé*", "255.255.255.255");
-            Server::getInstance(0)->sendMessage(portChangedMsg);
+            Server::sendMessage(portChangedMsg);
         }
-        UserPersistent::getInstance()->setPort(ui->portField->text().toInt());
+        UserPersistent::setPort(ui->portField->text().toInt());
     }
 
 
     UserPersistent::savePersistent();
     usernamePlaceholder->setPlaceholderText(UserPersistent::getUsername() + ">");
-    if (Server::hasInstance()) Server::getInstance(NULL)->changePort();
+    if (Server::hasInstance()) Server::changePort();
     this->close();
 }
 

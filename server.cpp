@@ -36,13 +36,13 @@ Server::~Server() {
 
 /**
  * @brief Server::getInstance
+ * @param mainwindow
  * @return
  */
-Server* Server::getInstance(MainWindow *mainwindow) {
+Server* Server::create(MainWindow *mainwindow) {
     if (Server::_instance == nullptr) {
         Server::_instance = new Server(mainwindow);
     }
-    return Server::_instance;
 }
 
 /**
@@ -61,12 +61,12 @@ void Server::delInstance() {
 bool Server::sendMessage(Message message) {
     QString texte = "";
     for (auto c : message.toQString()) {
-        QChar encode = rot(c, (_decal % 26));
+        QChar encode = _instance->rot(c, (_instance->_decal % 26));
         texte.append(encode);
     }
     QByteArray data = texte.toUtf8();
     QHostAddress to = QHostAddress(message.getDestination());
-    Server::getInstance()->_udpSocket->writeDatagram(data, to, UserPersistent::getPort());
+    _instance->_udpSocket->writeDatagram(data, to, UserPersistent::getPort());
     return true;
 }
 
@@ -74,9 +74,9 @@ bool Server::sendMessage(Message message) {
  * @brief Server::changePort
  */
 void Server::changePort() {
-    _udpReceiverSocket->close();
-    _udpReceiverSocket->bind(UserPersistent::getPort(), QUdpSocket::ShareAddress);
-    _udpReceiverSocket->open(QIODevice::ReadOnly);
+    _instance->_udpReceiverSocket->close();
+    _instance->_udpReceiverSocket->bind(UserPersistent::getPort(), QUdpSocket::ShareAddress);
+    _instance->_udpReceiverSocket->open(QIODevice::ReadOnly);
 }
 
 /**

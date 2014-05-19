@@ -19,14 +19,15 @@ MainWindow::MainWindow(QWidget *parent) :
     options = new OptionsWindow(0,ui->inputText);
     Message msg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
                           "127.0.0.1", "*connecté*", "255.255.255.255");
-    Server::getInstance(this)->sendMessage(msg);
+    Server::create(this);
+    Server::sendMessage(msg);
 }
 
 MainWindow::~MainWindow()
 {
     Message msg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
                           "127.0.0.1", "*déconnecté*", "255.255.255.255");
-    Server::getInstance(this)->sendMessage(msg);
+    Server::sendMessage(msg);
     UserPersistent::delInstance();
     Server::delInstance();
     if (options) delete options;
@@ -54,7 +55,7 @@ void MainWindow::on_inputText_returnPressed()
     Message msg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
                           "127.0.0.1", ui->inputText->text(), "255.255.255.255");
 //    this->appendMessage(msg);
-    Server::getInstance(this)->sendMessage(msg);
+    Server::sendMessage(msg);
     ui->inputText->clear();
 }
 
