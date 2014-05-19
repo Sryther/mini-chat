@@ -51,7 +51,7 @@ void OptionsWindow::on_saveButton_clicked() {
         UserPersistent::setPort(ui->portField->text().toInt());
     UserPersistent::savePersistent();
     usernamePlaceholder->setPlaceholderText(UserPersistent::getUsername() + ">");
-    if (Server::hasInstance()) Server::getInstance(NULL)->changePort(UserPersistent::getPort());
+    if (Server::hasInstance()) Server::getInstance(NULL)->changePort();
     this->close();
 }
 

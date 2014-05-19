@@ -28,8 +28,6 @@ UserPersistent::UserPersistent() {
 }
 
 UserPersistent::~UserPersistent() {
-    if (_instance) delete _instance;
-    _instance = nullptr;
     if (_savefile) delete _savefile;
     _savefile = nullptr;
 }
