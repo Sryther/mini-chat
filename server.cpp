@@ -46,27 +46,6 @@ void Server::delInstance() {
 }
 
 /**
- * @brief Server::prepareMessage
- * @param messageText
- */
-void Server::prepareMessage(QString messageText)
-{
-    if (messageText.isEmpty())
-        return;
-
-    QString username = UserPersistent::getUsername();
-    QString color = UserPersistent::getColor();
-    QString from = "127.0.0.1"; // TODO: Change for a real wan ip
-    QMap<QString, QString>::iterator i;
-    for (i = Resolver::_users->begin(); i != Resolver::_users->end(); ++i) {
-        Message message = Message(username, color, from, messageText, i.value());
-        if (!this->sendMessage(message)) {
-            break; // TODO: Exception
-        }
-    }
-}
-
-/**
  * @brief Server::sendMessage
  * @param message
  * @return
