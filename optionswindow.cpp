@@ -45,7 +45,7 @@ void OptionsWindow::on_saveButton_clicked() {
     else {
         if (ui->usernameField->text() != UserPersistent::getInstance()->getUsername()){
             Message nameChangedMsg = Message(UserPersistent::getInstance()->getUsername(), UserPersistent::getInstance()->getColor(),
-                                "127.0.0.1", "est maintenant *" + ui->usernameField->text() + "*", "255.255.255.255");
+                                "127.0.0.1", "*est maintenant " + ui->usernameField->text() + "*", "255.255.255.255");
             Server::getInstance(0)->sendMessage(nameChangedMsg);
         }
         UserPersistent::getInstance()->setUsername(ui->usernameField->text());
