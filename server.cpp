@@ -1,5 +1,4 @@
 #include "server.h"
-#include "resolver.h"
 #include "message.h"
 #include "userpersistent.h"
 #include <QtNetwork>
