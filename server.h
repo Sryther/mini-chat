@@ -5,6 +5,8 @@
 #include <QUdpSocket>
 #include <QObject>
 #include <QString>
+#include <QTimer>
+#include <QMap>
 #include "message.h"
 #include "mainwindow.h"
 
@@ -22,19 +24,24 @@ private:
     MainWindow* _mainwindow;
     QUdpSocket* _udpSocket;
     QUdpSocket* _udpReceiverSocket;
+    QUdpSocket* _udpProbeSocket;
+    QTimer* _timer;
+    QMap<QString, QString> _peers;
+    int _cooldown = 5000;
 public:
     static void create(MainWindow *mainwindow);
+    static bool hasInstance();
     static Server* getInstance();
     static void delInstance();
-    static bool sendMessage(Message message, bool system = false);
+    static void sendMessage(Message message, bool system = false);
+    void sendProbe();
+    void receiveProbe(QString username, QHostAddress ip);
     static void changePort();
-    static bool hasInstance();
-signals:
-    void newConnection(Connection *connection);
 private slots:
+    void probePeers();
     void processPendingDatagrams();
 private:
-    int _decal = 159;
+    int _decal = 42;
     QChar rot(QChar letter, int decal);
 };
 

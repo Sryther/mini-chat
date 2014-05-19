@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QUdpSocket>
 #include <exception>
+#include <QMessageBox>
 
 using namespace std;
 
@@ -14,11 +15,17 @@ using namespace std;
  */
 Server::Server(MainWindow *mainwindow) :
       _mainwindow(mainwindow),
-      _udpSocket(new QUdpSocket(this)),
-      _udpReceiverSocket(new QUdpSocket(this))
+      _udpSocket(new QUdpSocket()),
+      _udpReceiverSocket(new QUdpSocket()),
+      _udpProbeSocket(new QUdpSocket()),
+      _timer(new QTimer),
+      _peers(QMap<QString, QString>())
 {
+    connect(_timer, SIGNAL(timeout()), this, SLOT(probePeers()));
+    _timer->start(_cooldown);
     _udpReceiverSocket->bind(UserPersistent::getPort(), QUdpSocket::ShareAddress);
     connect(_udpReceiverSocket, SIGNAL(readyRead()),this, SLOT(processPendingDatagrams()));
+    sendProbe();
 }
 
 /**
@@ -27,17 +34,21 @@ Server::Server(MainWindow *mainwindow) :
 Server::~Server() {
     _udpSocket->close();
     _udpReceiverSocket->close();
+    _udpProbeSocket->close();
     _mainwindow = nullptr;
+    if (_timer) delete _timer;
+    _timer = nullptr;
     if (_udpSocket) delete _udpSocket;
     _udpSocket = nullptr;
     if (_udpReceiverSocket) delete _udpReceiverSocket;
     _udpReceiverSocket = nullptr;
+    if (_udpProbeSocket) delete _udpProbeSocket;
+    _udpProbeSocket = nullptr;
 }
 
 /**
- * @brief Server::getInstance
+ * @brief Server::create
  * @param mainwindow
- * @return
  */
 void Server::create(MainWindow *mainwindow) {
     if (Server::_instance == nullptr) {
@@ -45,6 +56,10 @@ void Server::create(MainWindow *mainwindow) {
     }
 }
 
+/**
+ * @brief Server::getInstance
+ * @return _instance
+ */
 Server* Server::getInstance() {
     if (Server::_instance) {
         return Server::_instance;
@@ -64,9 +79,8 @@ void Server::delInstance() {
 /**
  * @brief Server::sendMessage
  * @param message
- * @return
  */
-bool Server::sendMessage(Message message, bool system) {
+void Server::sendMessage(Message message, bool system) {
     QString texte = "";
     if (system) {
         message.setUsername("system");
@@ -80,7 +94,6 @@ bool Server::sendMessage(Message message, bool system) {
     QByteArray data = texte.toUtf8();
     QHostAddress to = QHostAddress(message.getDestination());
     _instance->_udpSocket->writeDatagram(data, to, UserPersistent::getPort());
-    return true;
 }
 
 /**
@@ -94,14 +107,38 @@ void Server::changePort() {
 
 /**
  * @brief Server::hasInstance
- * @return
+ * @return if Server is instantiated
  */
 bool Server::hasInstance() {
     return Server::_instance != nullptr;
 }
 
 /**
- * @brief Server::processPendingDatagrams
+ * @brief Server::probePeers every 5s
+ */
+void Server::probePeers() {
+    sendProbe();
+}
+
+/**
+ * @brief Server::sendProbe send a probe message on udp
+ */
+void Server::sendProbe() {
+    QByteArray data = ("probe:" + UserPersistent::getUsername()).toUtf8();
+    QHostAddress to = QHostAddress("255.255.255.255");
+    _udpProbeSocket->writeDatagram(data, to, UserPersistent::getPort());
+}
+
+/**
+ * @brief Server::receiveProbe store new peers
+ */
+void Server::receiveProbe(QString username, QHostAddress ip) {
+    if (_peers.contains(ip.toString())) return;
+    _peers.insert(ip.toString(), username);
+}
+
+/**
+ * @brief Server::processPendingDatagrams recover udp messages
  */
 void Server::processPendingDatagrams()
 {
@@ -111,15 +148,28 @@ void Server::processPendingDatagrams()
         QHostAddress from;
         _udpReceiverSocket->readDatagram(datagram.data(), datagram.size(), &from);
         QString datas = datagram.data();
-        QString texte = "";
-        for (auto c : datas) {
-            QChar decode = rot(c, 26 - (_decal % 26));
-            texte.append(decode);
+        if (datas.split("probe:").length() == 2) {
+            QString username = datas.split("probe:")[1];
+            receiveProbe(username, from);
+            QString deb = "";
+            for (auto i : _peers.keys()) {
+                deb += i + ":" + _peers[i] + "\n";
+            }
+            QMessageBox* box = new QMessageBox();
+            box->critical(NULL, "Critical error", deb);
+            delete box;
+            box = nullptr;
+        } else {
+            QString texte = "";
+            for (auto c : datas) {
+                QChar decode = rot(c, 26 - (_decal % 26));
+                texte.append(decode);
+            }
+            Message message = Message(texte);
+            message.setContent(message.getContent().replace(Message::getReplaceTag(), from.toString()));
+            message.setSender(from.toString());
+            _mainwindow->appendMessage(message);
         }
-        Message message = Message(texte);
-        message.setContent(message.getContent().replace(Message::getReplaceTag(), from.toString()));
-        message.setSender(from.toString());
-        _mainwindow->appendMessage(message);
     }
 }
 
@@ -127,7 +177,7 @@ void Server::processPendingDatagrams()
  * @brief Server::rot
  * @param letter
  * @param decal
- * @return
+ * @return letter rot decal
  */
 QChar Server::rot(QChar letter, int decal) {
     char c = letter.toLatin1();
