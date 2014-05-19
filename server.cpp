@@ -68,15 +68,16 @@ void Server::delInstance() {
  */
 bool Server::sendMessage(Message message, bool system) {
     QString texte = "";
+    if (system) {
+        message.setUsername("system");
+        message.setColor("#DFAF2C");
+        message.setContent("*" + message.getContent() + "*");
+    }
     for (auto c : message.toQString()) {
         QChar encode = _instance->rot(c, (_instance->_decal % 26));
         texte.append(encode);
     }
-    if (system) {
-        message.setUsername("*system");
-        message.setColor("#DFAF2C");
-    }
-    QByteArray data = (texte + "*").toUtf8();
+    QByteArray data = texte.toUtf8();
     QHostAddress to = QHostAddress(message.getDestination());
     _instance->_udpSocket->writeDatagram(data, to, UserPersistent::getPort());
     return true;
@@ -116,6 +117,7 @@ void Server::processPendingDatagrams()
             texte.append(decode);
         }
         Message message = Message(texte);
+        message.setContent(message.getContent().replace(Message::getReplaceTag(), from.toString()));
         message.setSender(from.toString());
         _mainwindow->appendMessage(message);
     }

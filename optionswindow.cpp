@@ -8,6 +8,7 @@
 #include <exception>
 #include <stdexcept>
 #include <ios>
+#include <QDateTime>
 
 OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
     QFrame(parent),
@@ -45,9 +46,10 @@ void OptionsWindow::on_saveButton_clicked() {
     else {
         if (ui->usernameField->text() != UserPersistent::getUsername()){
             Message nameChangedMsg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
-                                "127.0.0.1", "est maintenant <span style='font-weight:bold; color:" + UserPersistent::getColor() + "'>" +
+                                             "127.0.0.1", Message::paint(UserPersistent::getUsername(), UserPersistent::getColor(),
+                                                                         "from " + Message::getReplaceTag() + " at " + QDateTime::currentDateTime().toString("hh'h'mm:ss") )
+                                             + " est maintenant <span style='font-weight:bold; color:" + UserPersistent::getColor() + "'>" +
                                              ui->usernameField->text() + "</span>", "255.255.255.255");
-
             Server::sendMessage(nameChangedMsg, true);
         }
         UserPersistent::setUsername(ui->usernameField->text());
@@ -61,8 +63,9 @@ void OptionsWindow::on_saveButton_clicked() {
     else {
         if (ui->portField->text().toInt() != UserPersistent::getPort()){
             Message portChangedMsg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
-                                 "127.0.0.1", "*s'est déplacé*", "255.255.255.255");
-            Server::sendMessage(portChangedMsg);
+                                             "127.0.0.1", Message::paint(UserPersistent::getUsername(), UserPersistent::getColor(),
+                                                                         "from " + Message::getReplaceTag() + " at " + QDateTime::currentDateTime().toString("hh'h'mm:ss") ) + " s'est déplacé", "255.255.255.255");
+            Server::sendMessage(portChangedMsg, true);
         }
         UserPersistent::setPort(ui->portField->text().toInt());
     }

@@ -21,11 +21,13 @@ class Message
         static bool isValid(QStringList params);
         bool isValid();
         static const QString& getSeparator() { static QString separator("\x0001"); return separator; }
+        static const QString& getReplaceTag() { static QString tag("\x0002"); return tag; }
         QString getSender() { return _from; }
         void setSender(QString from) { _from = from; }
         QString getContent() { return _content; }
         QString getUsername() { return _username; }
         void setUsername(QString username) { _username = username; }
+        void setContent(QString content) { _content = content; }
         QString getColor() { return _color; }
         void setColor(QString color) { _color = color; }
         QString getDestination() { return _to; }
