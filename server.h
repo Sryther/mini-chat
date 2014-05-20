@@ -23,6 +23,7 @@ private:
     QUdpSocket* _udpSocket;
     QUdpSocket* _udpReceiverSocket;
 public:
+    Server(const Server &&other);
     static void create(MainWindow *mainwindow);
     static Server* getInstance();
     static void delInstance();

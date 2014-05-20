@@ -22,6 +22,16 @@ Server::Server(MainWindow *mainwindow) :
 }
 
 /**
+ * @brief Server::Server
+ * @param other
+ */
+Server::Server(const Server &&other)
+{
+    Server::_instance = other._instance;
+    this->~Server();
+}
+
+/**
  * @brief Server::~Server
  */
 Server::~Server() {

@@ -11,12 +11,16 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setAttribute(Qt::WA_QuitOnClose);
     ui->setupUi(this);
     ui->inputText->setPlaceholderText(UserPersistent::getUsername() + "> ");
+
+    // SystemTray Icon
     QIcon icon(":/icons/sms-call.png");
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setToolTip("Mini-Chat");
     trayIcon->setIcon(icon);
     trayIcon->show();
+
     options = new OptionsWindow(0,ui->inputText);
+
     Message msg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
                           "127.0.0.1", "*connecté*", "255.255.255.255");
     Server::create(this);

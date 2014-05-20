@@ -32,6 +32,15 @@ UserPersistent::UserPersistent() :
 }
 
 /**
+ * @brief UserPersistent::UserPersistent
+ * @param other
+ */
+UserPersistent::UserPersistent(const UserPersistent &&other) {
+    UserPersistent::_instance = other._instance;
+    this->~UserPersistent();
+}
+
+/**
  * @brief UserPersistent::~UserPersistent
  */
 UserPersistent::~UserPersistent() {

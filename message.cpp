@@ -8,9 +8,9 @@ using namespace std;
 /**
  * @brief Message::Message
  * @param username
- * @param from Sender's IP
+ * @param from
  * @param content
- * @param to Destination IP 255.255.255.255 <=> broadcast
+ * @param to
  */
 Message::Message(QString username, QString color, QString from, QString content, QString to = "255.255.255.255") :
     _username(username),
@@ -20,21 +20,21 @@ Message::Message(QString username, QString color, QString from, QString content,
     _to(to),
     _timestamp(QDateTime::currentDateTime().toTime_t())
 {
-
 }
 
 /**
  * @brief Message::Message
  * @param formattedString
  */
-Message::Message(QString formattedString) {
+Message::Message(QString formattedString) :
+    _timestamp(QDateTime::currentDateTime().toTime_t())
+{
     QStringList list = Message::parse(formattedString);
     _username = list[0];
     _color = list[1];
     _from = list[2];
     _content = list[3];
     _to = list[4];
-    _timestamp = QDateTime::currentDateTime().toTime_t();
 }
 
 /**
