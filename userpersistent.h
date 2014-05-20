@@ -11,6 +11,7 @@ private:
     ~UserPersistent();
     static UserPersistent* _instance;
 public:
+    UserPersistent(const UserPersistent &&other);
     static UserPersistent* getInstance();
     static void delInstance();
     static bool hasInstance();
