@@ -93,6 +93,7 @@ void UserPersistent::_savePersistent() {
     fileStream << "username:" + _username + "\n";
     fileStream << "port:" + QString::number(_port) + "\n";
     fileStream << "color:" + _color + "\n";
+    fileStream << "server:" + _serverIp + "\n";
 
     _savefile->close();
 }
@@ -113,6 +114,8 @@ void UserPersistent::_loadPersistent() {
             _port = line.split("port:")[1].toInt();
         } else if (line.contains("color:")) {
             _color = line.split("color:")[1];
+        } else if (line.contains("server:")) {
+            _serverIp = line.split("server:")[1];
         }
     }
     _savefile->close();
@@ -131,6 +134,14 @@ void UserPersistent::loadPersistent() {
  */
 QString UserPersistent::getColor() {
     return UserPersistent::getInstance()->_color;
+}
+
+/**
+ * @brief UserPersistent::getServerIp
+ * @return
+ */
+QString UserPersistent::getServerIp() {
+    return UserPersistent::getInstance()->_serverIp;
 }
 
 /**
@@ -155,6 +166,14 @@ QString UserPersistent::getUsername() {
  */
 void UserPersistent::setColor(QString color) {
     UserPersistent::getInstance()->_color = color;
+}
+
+/**
+ * @brief UserPersistent::setServerIp
+ * @param ip
+ */
+void UserPersistent::setServerIp(QString ip) {
+    _serverIp = ip;
 }
 
 /**

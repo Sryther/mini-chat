@@ -21,14 +21,17 @@ private:
     QString _username;
     int _port;
     QString _color;
+    QString _serverIp;
     QFile* _savefile;
     void _savePersistent();
     void _loadPersistent();
 public:
     void static setColor(QString color);
+    void static setServerIp(QString ip);
     void static setPort(int port);
     void static setUsername(QString username);
     QString static getColor();
+    QString static getServerIp();
     int static getPort();
     QString static getUsername();
 
