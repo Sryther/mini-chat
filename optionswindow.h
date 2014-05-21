@@ -29,6 +29,7 @@ private:
     QLineEdit* usernamePlaceholder;
     QString convertColor(QColor color);
     QColor convertColor(QString color);
+    QString _newColor;
 };
 
 #endif // OPTIONSWINDOW_H

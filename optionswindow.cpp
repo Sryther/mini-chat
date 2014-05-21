@@ -44,15 +44,16 @@ void OptionsWindow::on_saveButton_clicked() {
         throw std::ios_base::failure("Username cannot be empty");
 
     else {
-        if (ui->usernameField->text() != UserPersistent::getUsername()){
+        if (ui->usernameField->text() != UserPersistent::getUsername() || _newColor != UserPersistent::getColor()){
             Message nameChangedMsg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
                                              "127.0.0.1", Message::paint(UserPersistent::getUsername(), UserPersistent::getColor(),
                                                                          "from " + Message::getReplaceTag() + " at " + QDateTime::currentDateTime().toString("hh'h'mm:ss") )
-                                             + " est maintenant <span style='font-weight:bold; color:" + UserPersistent::getColor() + "'>" +
+                                             + " est maintenant <span style='font-weight:bold; color:" + _newColor + "'>" +
                                              ui->usernameField->text() + "</span>", "255.255.255.255");
             Server::sendMessage(nameChangedMsg, true);
+            UserPersistent::setUsername(ui->usernameField->text());
+            UserPersistent::setColor(_newColor);
         }
-        UserPersistent::setUsername(ui->usernameField->text());
     }
 
 
@@ -101,8 +102,8 @@ QString OptionsWindow::convertColor(QColor color) {
 void OptionsWindow::on_pushButton_clicked()
 {
     QColor color = QColorDialog::getColor(UserPersistent::getColor(), this);
-    UserPersistent::setColor(convertColor(color));
-    updateFields();
+    _newColor = convertColor(color);
+    ui->label_3->setStyleSheet("QLabel { background-color : "+ _newColor +"; }");
 }
 
 
