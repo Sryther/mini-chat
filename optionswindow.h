@@ -16,6 +16,8 @@ class OptionsWindow : public QFrame
 
 public:
     explicit OptionsWindow(QWidget *parent = 0, QLineEdit *placeholder = nullptr);
+    OptionsWindow(const OptionsWindow &&other);
+    OptionsWindow(const OptionsWindow &other);
     void updateFields();
     ~OptionsWindow();
 

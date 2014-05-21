@@ -44,7 +44,7 @@ Message::Message(QString formattedString) :
  */
 QStringList Message::parse(QString formatedString) {
     QStringList strings;
-    strings = formatedString.split(Message::getSeparator()); // Split into three elements
+    strings = formatedString.split(Message::getSeparator());
     return strings;
 }
 

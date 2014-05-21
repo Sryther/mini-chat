@@ -13,11 +13,24 @@
 OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
     QFrame(parent),
     ui(new Ui::OptionsWindow),
-    usernamePlaceholder (placeholder)
+    usernamePlaceholder(placeholder)
 {
     ui->setupUi(this);
     if (! UserPersistent::hasInstance()) UserPersistent::loadPersistent();
     updateFields();
+}
+
+OptionsWindow::OptionsWindow(const OptionsWindow &&other) :
+    ui(other.ui),
+    usernamePlaceholder(other.usernamePlaceholder)
+{
+    this->~OptionsWindow();
+}
+
+OptionsWindow::OptionsWindow(const OptionsWindow &other) :
+    ui(other.ui),
+    usernamePlaceholder(other.usernamePlaceholder)
+{
 }
 
 OptionsWindow::~OptionsWindow()
