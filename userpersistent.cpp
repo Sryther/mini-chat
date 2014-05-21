@@ -173,7 +173,7 @@ void UserPersistent::setColor(QString color) {
  * @param ip
  */
 void UserPersistent::setServerIp(QString ip) {
-    _serverIp = ip;
+    UserPersistent::getInstance()->_serverIp = ip;
 }
 
 /**
