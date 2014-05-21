@@ -9,6 +9,8 @@
 #include <stdexcept>
 #include <ios>
 #include <QDateTime>
+#include <QHostAddress>
+#include <QAbstractSocket>
 
 OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
     QFrame(parent),
@@ -46,6 +48,7 @@ void OptionsWindow::updateFields() {
     ui->usernameField->setText(UserPersistent::getUsername());
     ui->portField->setText(QString::number(UserPersistent::getPort()));
     ui->label_3->setStyleSheet("QLabel { background-color : "+ UserPersistent::getColor() +"; }");
+    ui->ipField->setText(UserPersistent::getServerIp());
 }
 
 void OptionsWindow::on_loadButton_clicked() {
@@ -56,7 +59,6 @@ void OptionsWindow::on_loadButton_clicked() {
 void OptionsWindow::on_saveButton_clicked() {
     if (ui->usernameField->text().length() == 0)
         throw std::ios_base::failure("Username cannot be empty");
-
     else {
         if (ui->usernameField->text() != UserPersistent::getUsername() || _newColor != UserPersistent::getColor()){
             Message nameChangedMsg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
@@ -68,6 +70,13 @@ void OptionsWindow::on_saveButton_clicked() {
             UserPersistent::setUsername(ui->usernameField->text());
             UserPersistent::setColor(_newColor);
         }
+    }
+
+    if (ui->ipField->text().length() == 0)
+        throw std::ios_base::failure("IP cannot be empty");
+    QHostAddress address(ui->ipField->text());
+    if (QAbstractSocket::IPv4Protocol == address.protocol()) {
+        UserPersistent::setServerIp(ui->ipField->text());
     }
 
 
