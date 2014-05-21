@@ -1,7 +1,6 @@
 #ifndef SERVER_H
 #define SERVER_H
 #include <QTcpServer>
-#include <QTcpSocket>
 #include <QUdpSocket>
 #include <QObject>
 #include <QString>
@@ -17,13 +16,14 @@ class Server : protected QTcpServer
     Q_OBJECT
 private:
     Server(MainWindow *mainwindow);
+    Server(const Server& that) = delete; // Disable copy constructor
+    Server(const Server &&other); // Move constructor
     ~Server();
     static Server* _instance;
     MainWindow* _mainwindow;
     QUdpSocket* _udpSocket;
     QUdpSocket* _udpReceiverSocket;
 public:
-    Server(const Server &&other);
     static void create(MainWindow *mainwindow);
     static Server* getInstance();
     static void delInstance();

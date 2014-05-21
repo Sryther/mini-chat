@@ -2,8 +2,6 @@
 #include "message.h"
 #include "userpersistent.h"
 #include <QtNetwork>
-#include <QTcpSocket>
-#include <QUdpSocket>
 #include <exception>
 
 using namespace std;

@@ -8,10 +8,11 @@ class UserPersistent
 {
 private:
     UserPersistent();
+    UserPersistent(const UserPersistent &other) = delete; // Disable copy constructor
+    UserPersistent(const UserPersistent &&other); // Move constructor
     ~UserPersistent();
     static UserPersistent* _instance;
 public:
-    UserPersistent(const UserPersistent &&other);
     static UserPersistent* getInstance();
     static void delInstance();
     static bool hasInstance();
