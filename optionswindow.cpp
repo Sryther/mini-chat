@@ -55,7 +55,7 @@ void OptionsWindow::on_loadButton_clicked() {
 
 void OptionsWindow::on_saveButton_clicked() {
     if (ui->usernameField->text().length() == 0)
-        throw std::ios_base::failure("Username cannot be empty");
+        throw std::logic_error("Username cannot be empty");
 
     else {
         if (ui->usernameField->text() != UserPersistent::getUsername() || _newColor != UserPersistent::getColor()){
@@ -73,7 +73,7 @@ void OptionsWindow::on_saveButton_clicked() {
 
     if(ui->portField->text().toInt() > 65565 ||
             ui->portField->text().toInt() < 1024)
-        throw std::ios_base::failure("Port must be between 1024 and 65565");
+        throw std::logic_error("Port must be between 1024 and 65565");
 
     else {
         if (ui->portField->text().toInt() != UserPersistent::getPort()){
