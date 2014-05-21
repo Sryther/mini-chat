@@ -17,6 +17,7 @@ OptionsWindow::OptionsWindow(QWidget *parent, QLineEdit *placeholder) :
 {
     ui->setupUi(this);
     if (! UserPersistent::hasInstance()) UserPersistent::loadPersistent();
+    _newColor = UserPersistent::getColor();
     updateFields();
 }
 
