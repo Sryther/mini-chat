@@ -58,7 +58,7 @@ void OptionsWindow::on_loadButton_clicked() {
 
 void OptionsWindow::on_saveButton_clicked() {
     if (ui->usernameField->text().length() == 0)
-        throw std::ios_base::failure("Username cannot be empty");
+        throw std::logic_error("Username cannot be empty");
     else {
         if (ui->usernameField->text() != UserPersistent::getUsername() || _newColor != UserPersistent::getColor()){
             Message nameChangedMsg = Message(UserPersistent::getUsername(), UserPersistent::getColor(),
@@ -73,16 +73,18 @@ void OptionsWindow::on_saveButton_clicked() {
     }
 
     if (ui->ipField->text().length() == 0)
-        throw std::ios_base::failure("IP cannot be empty");
+        throw std::logic_error("IP cannot be empty");
     QHostAddress address(ui->ipField->text());
     if (QAbstractSocket::IPv4Protocol == address.protocol()) {
         UserPersistent::setServerIp(ui->ipField->text());
+    } else {
+        throw std::logic_error("IP not valid");
     }
 
 
     if(ui->portField->text().toInt() > 65565 ||
             ui->portField->text().toInt() < 1024)
-        throw std::ios_base::failure("Port must be between 1024 and 65565");
+        throw std::logic_error("Port must be between 1024 and 65565");
 
     else {
         if (ui->portField->text().toInt() != UserPersistent::getPort()){
